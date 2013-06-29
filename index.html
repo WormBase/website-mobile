@@ -36,20 +36,19 @@
     <!-- START search-page -->
     <div data-role="page" id="search-page">
     
-    <!-- 
-      <div data-role="panel" id="search-filters">
-        
-      </div>
-    -->
-
       <div data-role="header">
         <a href="#" data-rel="back" data-direction="reverse" 
           data-transition="slidefade" class="ui-btn-left" data-role="button" 
           data-icon="arrow-l" data-mini="true" data-iconpos="notext">
           Back
         </a>
-        <div style="margin-left:40px">
-          <input type="search" name="search" data-mini="true" />
+        <div style="margin-left:40px" >
+          <input type="search" name="search" data-mini="true"/>
+          <div data-role="fieldcontain" style="display:inline" data-mini="true">
+            <select name="search-classes" id="search-dropdown">
+              <!-- options here -->
+            </select>
+          </div>
         </div>
       </div>
 
@@ -77,7 +76,7 @@
           class="ui-btn-left" >
           Widgets
         </a>
-        <h1 class="ui-title">[Object name]</h1>
+        <h1 class="ui-title">WormBase</h1>
         <a href="#search-page" data-icon="search" data-transition="slidefade" 
           data-role="button" class="header-search-btn ui-btn-right">
           Search

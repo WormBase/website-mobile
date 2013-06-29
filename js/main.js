@@ -4,14 +4,6 @@ $.support.cors = true;
 
 $.mobile.page.prototype.options.domCache = true;
 
-function search(className, query, page){
-  page = (typeof page === "undefined") ? "1" : page;
-  return $.ajax(BASE_URL + '/search/' 
-                + className + '/' + query + '/' + page 
-                + '?content-type=application/json');
-} // search
-
-
 var Class = function(className, objectId) {
   this.id = objectId;
   this.className = className;
@@ -22,7 +14,7 @@ var Class = function(className, objectId) {
   var widgetList = [];
   var defaultWidgets = [];
   $.ajax({
-          url:      BASE_URL + '/rest/config/sections/species/' 
+          url:      BASE_URL + '/rest/config/sections/species/'     /// TODO: fetch 'resources' as well, (paper, person, etc)
                              + className + '?content-type=application/json', 
           async:    false
   }).done(function(response){
@@ -47,19 +39,29 @@ var Class = function(className, objectId) {
 
 
   // Make all default widgets visible and populate side panel
+  $('#object-page').find('div[data-role=panel]').find('ul').empty();
+  $('#object-page').find('div[data-role=content]').empty();
   for (var i = 0; i < this.widgetList.length; i++) {  
     // Create widget list on side panel
-    $('#object-page').find('div[data-role=panel]').find('ul')
-      .append('<li id="' + this.widgetList[i].widgetName + '"><a href="#" style="padding: 0 0 0 0;" >'
+    optionsHTML = '<li id="' + this.widgetList[i].widgetName + '-option">'
+            + '<a href="#" style="padding: 0 0 0 0;" >'
             + '<label style="border-width: 0 0 0 0; margin: 0 0 0 0;" data-corners="false" >'
-            + '<input type="checkbox"/>'
-            + '<h3>' + this.widgetList[i].widgetTitle + '</h3></label></a></li>')
-      .listview('refresh').trigger('create');
-    
+            + '<input type="checkbox" />'
+            + '<h3>' + this.widgetList[i].widgetTitle + '</h3></label></a></li>';
+
+    if (this.widgetList[i].widgetName == 'overview')
+      $('#object-page div[data-role=panel] ul').prepend(optionsHTML);
+    else
+      $('#object-page div[data-role=panel] ul').append(optionsHTML);
+
     // check if this is a default widget, if yes show it
     for (var j = 0; j < this.defaultWidgets.length; j++)
-      if (this.widgetList[i].widgetName == this.defaultWidgets[j])
+      if (this.widgetList[i].widgetName == this.defaultWidgets[j]) {
         this.widgetList[i].show();
+        $('#' + this.defaultWidgets[j] + '-option input').prop('checked', true);
+      }
+
+    $('#object-page div[data-role=panel] ul').trigger('create').listview('refresh');
   }
 
 } // Class
@@ -78,19 +80,25 @@ var Widget = function(className, objectId, widgetName, widgetTitle) {
 
 
 Widget.prototype.show = function() {
-// TODO: add support for browsers not supporting localStorage
+// TODO: add support for browsers not supporting localStorage ? 
 
   this.visible = true;
 
-  $('#object-page').find('div[data-role=content]')
-        .append('<div id="' + this.objectId + '_' + this.widgetName + '"' 
+  // Create widget container 
+  var widgetContainerHTML = 
+                '<div id="' + this.widgetName + '"' 
               + 'data-role="collapsible" '
               + 'data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" ' 
               + 'data-iconpos="right" data-collapsed="false" '
               + 'data-theme="c" data-content-theme="c"> '
-              + '<h3>'+ this.widgetTitle +'</h3></div>').trigger('create');
-  
-  // TODO: toggle checkbox on left panel
+              + '<h3>'+ this.widgetTitle +'</h3></div>';
+
+  if (this.widgetName === 'overview')
+    $('#object-page div[data-role=content]').prepend(widgetContainerHTML);
+  else
+    $('#object-page div[data-role=content]').append(widgetContainerHTML);
+
+  $('#object-page div[data-role=content]').trigger('create');
   
   var objectId = this.objectId;
   var widgetName = this.widgetName;
@@ -105,8 +113,6 @@ Widget.prototype.show = function() {
             async:    false
     }).done(function(response){
       
-      //widgetName = response.uri.split('/').pop();
-
       var obj = {};
       if (typeof localStorage[objectId] !== "undefined")
         obj = JSON.parse(localStorage[objectId]);
@@ -116,7 +122,7 @@ Widget.prototype.show = function() {
 
     }).fail(function(){
       // display error in widget box
-      $('#' + objectId + '_' + widgetName + ' .ui-collapsible-content')
+      $('#' + widgetName + ' .ui-collapsible-content')
         .append('<p>Could not possible to retrieve data</p>');
     });
 
@@ -127,19 +133,20 @@ Widget.prototype.show = function() {
 
   // TODO: template caching
 
+  $('#' + widgetName + ' .ui-collapsible-content').empty();
   $.ajax({
     url:  'templates/' + this.className + '/' + this.widgetName + '.handlebars',
     async:false
   }).done(function(fileContent){
 
     template = Handlebars.compile(fileContent);
-    $('#' + objectId + '_' + widgetName + ' .ui-collapsible-content')
+    $('#' + widgetName + ' .ui-collapsible-content')
       .append(template(JSON.parse(localStorage[objectId])[widgetName]));
 
   }).fail(function(){
 
     // display error in widget box
-    $('#' + objectId + '_' + widgetName + ' .ui-collapsible-content')
+    $('#' + widgetName + ' .ui-collapsible-content')
       .append('<p>Template file not found</p>');
 
   });
@@ -148,70 +155,110 @@ Widget.prototype.show = function() {
 
 
 Widget.prototype.hide = function() {
+
   this.visible = false;
 
-  // TODO: clear the div where the widget was placed in
+  $('#' + this.widgetName).remove();
 
 } // Widget.hide()
 
 
-/*
-function getWidget(className, objectId, widgetName){
-  return $.ajax(BASE_URL + '/rest/widget/' 
-                + className + '/' + objectId + '/' + widgetName 
-                + '?content-type=application/json');
-} // getWidget
 
-function getField(className, objectId, fieldName){
-  return $.ajax(BASE_URL + '/rest/field/' 
-                + className + '/' + objectId + '/' + fieldName 
-                + '?content-type=application/json');
-} // getField
-*/
+var object;
 
+var searchClass;
+var searchQuery;
+var resultsPage;
 
 // All jQuery event handlers go inside this
 $(document).on('pageinit', function() {
 
-  // TODO: add search for other class types, add multi page support
-  $('input[name=search]').on('change', function(){
-    query = $('input[name=search]').val();
-    if (query != '')
-      search('gene', query)
-        .done(function(response){
-          $('#search-results-list').empty();
-          if (response.count > 0) {
 
-            for (var i = 0; i < response.results.length; i++) {
-              item = response.results[i];
-              $('#search-results-list')
-                  .append('<li id="' + item.name.id 
-                        + '" myclass="' + item.name.class + '">' // bad
-                        + '<a href="#object-page"><h3>' 
-                        + item.name.label + '</h3>'
-                        + '<p>' + item.name.taxonomy + ' - ' + item.name.class
-                        + '</p></a></li>');
-            }
-            $('#search-results-list').listview('refresh');
-          }
-          else
-            $('#search-results-list').append('<h3>No results</h3>');
-        })
-        .fail(function(){ console.log('failed to load search results'); });
-  }); // input[name=search] > change
+  var search = function(className, query, page){
+    page = (typeof page === "undefined") ? "1" : page;
+    $.ajax({
+            url:  BASE_URL + '/search/' 
+                           + className + '/' + query + '/' + page 
+                           + '?content-type=application/json'
+    }).done(function(response){
+      if (response.count > 0) 
+        for (var i = 0; i < response.results.length; i++) {
+            item = response.results[i];
+            $('#search-results-list')
+                .append('<li id="' + item.name.class + '-' + item.name.id + '">'
+                      + '<a href="#"><h3>' 
+                      + item.name.label + '</h3>'
+                      + '<p>' + item.name.taxonomy + ' - ' + item.name.class
+                      + '</p></a></li>');
+        }
+      else
+        $('#search-results-list').append('<li><h3>No results</h3></li>');
+
+      if (response.count > response.page * 10)
+        $('#search-results-list').append('<li id="load-more"><a href="#">Load More</a></li>')
+
+      $('#search-results-list').listview('refresh');
+    }).fail(function(){ 
+      alert('failed to load search results'); 
+    });
+  } // search
+
+  var startNewSearch = function() {
+    $('#search-results-list').empty();
+    searchQuery = $('input[name=search]').val();
+    if (searchQuery != '')
+    {
+      searchClass = $('#search-dropdown').find(":selected")[0].id;
+      resultsPage = 1;
+      search(searchClass, searchQuery, resultsPage);
+    }
+  } // startNewSearch
+
+  $('input[name=search]').on('change', startNewSearch); // search box > change
+  $('#search-dropdown').on('change', startNewSearch); // search dropdown > change
+
+  $('#search-results-list').off().delegate('li', 'vclick', function(){
+    if (this.id === "load-more") {
+      resultsPage++;
+      $('#search-results-list #load-more').remove();
+      search(searchClass, searchQuery, resultsPage);
+    
+    } else {
+      $.mobile.changePage('#object-page', { allowSamePageTransition: true });
+
+      splittedID = this.id.split('-')
+      className = splittedID.shift();
+      objectId  = splittedID.join('-');
+      object = new Class(className, objectId);
+    }
+  }); // #search-results-list li > vclick
+
+  $('#object-page div[data-role=panel] ul').off().delegate('span.ui-btn-inner', 'click', function(){
+    widgetName = $(this).parents('li')[0].id.split('-')[0];
+    for (var i = 0; i < object.widgetList.length; i++)
+      if (object.widgetList[i].widgetName == widgetName)
+        if (object.widgetList[i].visible == false)
+          object.widgetList[i].show();
+        else
+          object.widgetList[i].hide();  
+  }); // widgets-panel-list > click
+ 
+  // Populate search dropdown menu
+  $('#search-page').on('pagebeforeshow', function(){    
+    $('#search-dropdown').empty();
+    $.ajax({
+      url:  BASE_URL + '/rest/config/search_dropdown?content-type=application/json'
+    }).done(function(response){
+      $('#search-dropdown').empty();
+      for (var i = 0; i < response.data.option.length; i++)
+        $('#search-dropdown').append('<option id="' 
+                                    + response.data.option[i].id + '">' 
+                                    + response.data.option[i].title + '</option>')
+                             .selectmenu('refresh');
+    }).fail(function(){
+      alert('Failed to populate dropdown search menu');
+    });
+  }); // #search-page > beforeshow
 
 
-  $('#search-results-list').delegate('li', 'vclick', function(){
-    console.log(this.id);
-    // TODO: handle page change to search result
-  });
-
-  // TODO: make event handler for the widgets side panel
-
-  // just a test
-  $('#object-page').on('pagebeforeshow', function(){
-    gene = new Class('gene', 'WBGene00015146');
-    console.log(gene);
-  }); 
-  
 }); // document > pageinit
