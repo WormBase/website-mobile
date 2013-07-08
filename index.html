@@ -3,25 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>WormBase</title>
+
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
-    <script src="./js/jquery-1.10.1.min.js"></script>
-    <script src="./js/jquery.mobile-1.3.1.min.js"></script>
     <link rel="stylesheet" href="./css/jquery.mobile-1.3.1.min.css" />
     <link rel="stylesheet" href="./css/main.css" />
-    <script src="./js/handlebars.js"></script>
-    <script src="./js/main.js"></script>
+
+    <script src="./js/libs/require.js" data-main="./js/mobile"></script>
+
   </head>
   <body>
     <!-- START home-page -->
-    <div data-role="page" id="home-page">
+    <div data-role="page" id="home">
 
       <div data-role="header">
-        <a href="#settings-page" data-transition="slidefade" data-icon="gear">
+        <a href="#settings" data-transition="slidefade" data-icon="gear">
           Settings
         </a>
         <h1>WormBase</h1>
-        <a href="#search-page" data-transition="slidefade" data-icon="search">
+        <a href="#search" data-transition="slidefade" data-icon="search">
           Search
         </a>
       </div>
@@ -53,7 +54,7 @@
       </div>
 
       <div data-role="content">
-        <ul data-role="listview" id="search-results-list">
+        <ul data-role="listview" id="search-result-list">
           
         </ul>
       </div>
@@ -77,13 +78,13 @@
           Widgets
         </a>
         <h1 class="ui-title">WormBase</h1>
-        <a href="#search-page" data-icon="search" data-transition="slidefade" 
+        <a href="#search" data-icon="search" data-transition="slidefade" 
           data-role="button" class="header-search-btn ui-btn-right">
           Search
         </a>
 
       </div>     
-      <div data-role="content">
+      <div data-role="content" id="widgets-area">
         <!-- widgets here -->
       </div>
 
@@ -93,7 +94,7 @@
     <!-- START settings-page -->
     <div data-role="page" id="settings-page">
       <div data-role="header">
-        <a href="#home-page" data-icon="home" data-transition="slidefade">
+        <a href="#home" data-icon="home" data-transition="slidefade">
           Home
         </a>
         <h1>Settings</h1>
@@ -105,5 +106,5 @@
     <!-- END settings-page -->
 
   </body>
-
+  
 </html>
