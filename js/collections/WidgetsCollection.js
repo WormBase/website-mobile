@@ -10,6 +10,13 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
 
             model: WidgetModel,
 
+            url: function() {
+
+                return window.BASE_URL + "/rest/config?class=" 
+                                       + this.parent.get('className')
+                                       + "&content-type=application/json";
+            },
+
             // Overriding parse method
             parse: function(response) {
 
@@ -33,6 +40,9 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
                 
                 return array;
             },
+
+
+/*          Temporary: use this method only if staging or dev servers are not available
 
             // Overriding Backbone.fetch method
             fetch: function(options) {
@@ -72,6 +82,7 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
 
                 return xhr;
             },
+*/
             
         } );
 

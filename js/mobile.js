@@ -31,21 +31,21 @@ require.config( {
 // Includes File Dependencies
 require([ "jquery", "backbone", "routers/mobileRouter" ], function( $, Backbone, MobileRouter ) {
 
-	$( document ).on( "mobileinit",
+    $( document ).on( "mobileinit",
 
-		// Set up the "mobileinit" handler before requiring jQuery Mobile's module
-		function() {
+        // Set up the "mobileinit" handler before requiring jQuery Mobile's module
+        function() {
 
-			// Prevents all anchor click handling including the addition of active button state and alternate link bluring.
-			$.mobile.linkBindingEnabled = false;
+            // Prevents all anchor click handling including the addition of active button state and alternate link bluring.
+            $.mobile.linkBindingEnabled = false;
 
-			// Disabling this will prevent jQuery Mobile from handling hash changes
-			$.mobile.hashListeningEnabled = false;
-		}
-	)
+            // Disabling this will prevent jQuery Mobile from handling hash changes
+            $.mobile.hashListeningEnabled = false;
+        }
+    )
 
 
-	require( [ "jquerymobile" ], function() {
+    require( [ "jquerymobile" ], function() {
 
             // set to true if server cannot handle HTTP PUT or HTTP DELETE
             Backbone.emulateHTTP = true;
@@ -53,8 +53,8 @@ require([ "jquery", "backbone", "routers/mobileRouter" ], function( $, Backbone,
             // set to true if server cannot handle application/json requests
             Backbone.emulateJSON = false;
 
-		// Instantiates a new Backbone.js Mobile Router
-		this.router = new MobileRouter();
+        // Instantiates a new Backbone.js Mobile Router
+        this.router = new MobileRouter();
 
-	} );
+    } );
 } );

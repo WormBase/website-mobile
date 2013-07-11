@@ -2,18 +2,9 @@
 // =============
 
 // Includes file dependencies
-define([ "jquery","backbone",
-         "../models/SearchResultEntryModel",
-         "../collections/SearchResultsCollection",
-         "../views/SearchResultsView", 
-         "../views/AppView" ], 
+define([ "jquery","backbone", "../views/AppView" ], 
 
-    function( $, 
-              Backbone, 
-              SearchResultEntryModel, 
-              SearchResultsCollection, 
-              SearchResultsView,
-              AppView ) {
+    function( $, Backbone, AppView ) {
 
         // Extends Backbone.Router
         var WormbaseRouter = Backbone.Router.extend( {
@@ -22,7 +13,7 @@ define([ "jquery","backbone",
             initialize: function() {
 
                 // Base url for APIs
-                window.BASE_URL = "http://www.wormbase.org";
+                window.BASE_URL = "http://staging.wormbase.org";
 
                 // Instantiates a new App View
                 this.appView = new AppView();
@@ -43,7 +34,7 @@ define([ "jquery","backbone",
 
                 "search/:className/:query":     "search",
 
-                "object(/:className/:id)":      "object"
+                "object/:className/:id":        "object"
             },
 
             // Home method

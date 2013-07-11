@@ -66,8 +66,6 @@ define([ "jquery",
                     
                     reset: true,
 
-                    className: this.model.get('className'),
-
                     success: function() {
                         $.mobile.changePage("#object-page", { reverse: false, changeHash: false } );
                     },
