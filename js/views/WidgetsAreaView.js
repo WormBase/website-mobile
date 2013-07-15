@@ -2,9 +2,9 @@
 // =============
 
 // Includes file dependencies
-define([ "jquery", "backbone"], 
+define([ "jquery", "backbone", "views/WidgetView"], 
 
-    function( $, Backbone ) {
+    function( $, Backbone, WidgetView ) {
 
         // Extends Backbone.View
         var WidgetsAreaView = Backbone.View.extend( {
@@ -12,74 +12,33 @@ define([ "jquery", "backbone"],
             // The View Constructor
             initialize: function() {
 
+                this.widgetViews = [];
             },
 
             el: "#widgets-area",
 
-            show: function(widget) {
+            // renders the widgets placeholders
+            render: function() {
 
-                $el = this.$el;
+                var self = this;
 
-                // create the boxes for the widgets
-                require( ["text!../templates/app/widget-container.html"], 
-                    function(WidgetContainer) {
-                        
-                        template = _.template(WidgetContainer, { "widget": widget } );
-
-                        if (widget.get('widgetName') == "overview")
-                            $el.prepend(template);
-                        else
-                            $el.append(template);
-
-                        $el.trigger('create');
-                    }
-                );
-
-                // Retrieve all the fields for this widget from the server
-                widget.fetch( {
-
-                    success: function() {
-
-                        // set the title in the header
-                        if (widget.get('widgetName') == "overview")
-                           $('#object-page div[data-role=header] h1')[0].innerHTML = widget.get('fields').name.data.label;
-
-                        // look for the template file for this widget
-                        require( ["text!../templates/classes/" + widget.collection.parent.get('className') + "/" + widget.get('widgetName') + ".html"], 
-
-                            // on success, render it
-                            function(widgetTemplate) {
-
-                                widgetContent = _.template(widgetTemplate, { "widget": widget.get('fields') } );
-                                $el.find("#" + widget.get('widgetName') + ' .ui-collapsible-content').append(widgetContent);
-                            },
-
-                            // on error, print error message
-                            function(err) { 
-
-                                widgetContent = "<p>The template file for this widget has not been implemented yet.</p>";
-                                $el.find("#" + widget.get('widgetName') + ' .ui-collapsible-content').append(widgetContent);
-                            }
-                        );
-                    },
-
-                    error: function() {
-
-                        widgetContent = "<p>Error while retrieving widget from the server</p>";
-                        $el.find("#" + widget.get('widgetName') + ' .ui-collapsible-content').append(widgetContent);
-                    },
-
-                } );
+                _.each(this.parent.model.widgets.models, function(model) {
     
+                    var newWidgetView = new WidgetView( { model: model } );
+                    newWidgetView.parent = self;
 
+                    newWidgetView.render();
 
+                    self.widgetViews.push( newWidgetView );     
+                } );
+
+                return this;
             },
 
-            hide: function(widget) {
+            reset: function() {
 
-                this.$el.find("#" + widget.get('widgetName')).remove();
+                this.$el.empty();
             },
-
         } );
 
         // Returns the View class

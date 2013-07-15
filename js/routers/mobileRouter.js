@@ -51,12 +51,12 @@ define([ "jquery","backbone", "../views/AppView" ],
 
             search: function(className, query) {
 
-                this.appView.search(className, query);
+                this.appView.search(className.toLowerCase(), query);
             },
 
             object: function(className, id) {
 
-                this.appView.gotoObject(className, id);
+                this.appView.gotoObject(className.toLowerCase(), id);
             }
 
         } );

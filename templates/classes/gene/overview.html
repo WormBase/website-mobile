@@ -1,2 +1,107 @@
-<h5><%= widget.name.data.label %></h5>
-<p><%= widget.concise_description.data.text %></p>
+<h4><i>
+    <%= fields.name.data.label %>
+    <span class="fade">(<%= (typeof fields.gene_class.data !== 'undefined') ? fields.gene_class.data.description : '' %>)</span>
+</i></h4>
+
+<div data-role="popup" id="detailsPopup" class="ui-corner-all" data-overlay-theme="a" data-theme="c" >
+    <div data-role="header" class="ui-corner-top ui-header ui-bar-a" data-theme="a">
+        <h1 class="ui-title">Details</h1>
+        <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-left">Close</a>
+    </div>
+    <div data-role="content" class="ui-corner-bottom ui-content" data-theme="d">
+        <% if (typeof fields.taxonomy.data.genus !== 'undefined') { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.taxonomy.description %>" rel="tooltip">Species</span>:</div>
+                <div class="field-content" class="species"><%= fields.taxonomy.data.genus + ' ' + fields.taxonomy.data.species %></div>
+            </div>
+        <% } %>
+        <% if (typeof fields.sequence_name.data !== 'undefined') { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.sequence_name.description %>" rel="tooltip">Sequence</span>:</div>
+                <div class="field-content"><%= fields.sequence_name.data %></div>
+            </div>
+        <% } %>
+        <% if (typeof fields.other_names.data !== 'undefined') { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.other_names.description %>" rel="tooltip">Other name(s)</span>:</div>
+                <div class="field-content"><%= fields.other_names.data.join(', ') %></div>
+            </div>
+        <% } %>
+        <% if (typeof fields.classification.data.type !== 'undefined') { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.classification.description %>" rel="tooltip">Type</span>:</div>
+                <div class="field-content"><%= fields.classification.data.type %></div>
+            </div>
+        <% } %>
+        <% if (fields.gene_class.data !== null) { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.gene_class.description %>" rel="tooltip">Gene class</span>:</div>
+                <div class="field-content">
+                    <a href="#object/<%= fields.gene_class.data.tag.class %>/<%= fields.gene_class.data.tag.id %>">
+                        <%= fields.gene_class.data.tag.label %>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+        <% if (fields.operon.data !== null) { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.operon.description %>" rel="tooltip">Operon</span>:</div>
+                <div class="field-content">
+                    <a href="#object/<%= fields.operon.data.class %>/<%= fields.operon.data.id %>">
+                        <%= fields.operon.data.label %>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+        <% if (fields.transposon.data !== null) { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.transposon.description %>" rel="tooltip">Transposon</span>:</div>
+                <div class="field-content">
+                    <a href="#object/<%= fields.transposon.data.class %>/<%= fields.transposon.data.id %>">
+                        <%= fields.transposon.data.label %>
+                    </a>
+                </div>
+            </div>
+        <% } %> 
+        <% if (fields.clone.data !== null) { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.clone.description %>" rel="tooltip">Clone</span>:</div>
+                <div class="field-content">
+                    <a href="#object/<%= fields.clone.data.class %>/<%= fields.clone.data.id %>">
+                        <%= fields.clone.data.label %>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+        <% if (fields.parent_sequence.data !== null) { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.parent_sequence.description %>" rel="tooltip">Parent seq</span>:</div>
+                <div class="field-content">
+                    <a href="#object/<%= fields.parent_sequence.data.class %>/<%= fields.parent_sequence.data.id %>">
+                        <%= fields.parent_sequence.data.label %>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+        <% if (fields.named_by.data !== null) { %>
+            <div class="field">
+                <div class="field-title"><span title="<%= fields.named_by.description %>" rel="tooltip">Named by</span>:</div>
+                <div class="field-content">
+                    <a href="#object/<%= fields.named_by.data.class %>/<%= fields.named_by.data.id %>">
+                        <%= fields.named_by.data.label %>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+        <% if (fields.name.data !== null) { %>
+            <div class="field">
+                <div class="field-title">WormBase ID:</div>
+                <div class="field-content"><%= fields.name.data.id %></div>
+            </div>
+        <% } %>
+        <br />
+    </div>
+</div>
+
+<span><%= fields.concise_description.data.text %></span>
+<button id="details" data-rel="popup" data-mini="true">Details</a></button>

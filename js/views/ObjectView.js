@@ -5,35 +5,44 @@
 define([ "jquery", 
          "backbone",
          "models/ObjectModel",
+         "views/WidgetsPanelView",
          "views/WidgetsAreaView" ], 
 
-    function( $, Backbone, ObjectModel, WidgetsAreaView ) {
+    function( $, Backbone, ObjectModel, WidgetsPanelView, WidgetsAreaView ) {
 
         // Extends Backbone.View
         var ObjectView = Backbone.View.extend( {
 
             // The View Constructor
             initialize: function() {
+
                 var self = this;
 
                 this.model = new ObjectModel();
-                this.model.parentView = this;
-                
-                this.model.widgetsList.on("reset", this.render, this);
+                this.model.parent = this;
+
+                this.panelView = new WidgetsPanelView();
+                this.panelView.parent = this;
 
                 this.areaView = new WidgetsAreaView();
-                this.areaView.parentView = this;
+                this.areaView.parent = this;
+
+                this.model.widgets.on("reset", this.reset, this);
 
                 this.model.on("change:id", this.changeObject, this);
 
-                this.model.widgetsList.on("change:visible", this.visibilityHasChanged, this);
+                // Bind event to open the panel
+                this.$el.find('#openPanelButton').on("vclick", function() {
 
-                this.$el.find('ul').delegate("li","click", function() {
+                    self.panelView.$el.panel('open');
+                } );
+
+                this.panelView.$el.find('ul').on("click", "li", function() {
 
                     var widgetName = $(this)[0].id.split('-')[0];
-                    
+
                     // find the widget in the collection
-                    var widget = self.model.widgetsList.find( function(widget) { 
+                    var widget = self.model.widgets.find( function(widget) { 
                         return widget.get('widgetName') == widgetName; 
                     } );
 
@@ -42,88 +51,54 @@ define([ "jquery",
                 } );
             },
 
+            el: "#object-page",
+
             toggleVisibility: function(widget) {    
 
                 widget.set( {visible: !widget.get('visible') } );
             },
 
-            visibilityHasChanged: function(widget) {
-
-                if (widget.get('visible') == true) 
-                    this.areaView.show(widget);
-                else                     
-                    this.areaView.hide(widget);
-            },
-
             el: "#object-page",
-
 
             changeObject: function() {
 
                 $.mobile.loading("show");
 
-                this.model.widgetsList.fetch({
-                    
+                this.model.widgets.fetch({
+
                     reset: true,
 
                     success: function() {
+
+                        $.mobile.loading('hide');
+
                         $.mobile.changePage("#object-page", { reverse: false, changeHash: false } );
                     },
 
                     error: function() {
-                        console.log('error');
+                        alert('error');
                     }
                 });
 
             },
-            
-            // Renders all of the models on the UI
+
+            // renders options on the panel and placeholders on the areaview
             render: function() {
 
-                var self = this;
-                
-                var widgets = this.model.widgetsList.models;
+                this.panelView.render();
+                this.areaView.render();
 
-                // create the options in the panel
-                require( ["text!../templates/app/widget-panel-option.html"], 
-                    function(WidgetPanelOption) {
-                        
-                        _.each( widgets, function(widget) {
-
-                            // render the template
-                            this.template = _.template( WidgetPanelOption, { "widget": widget } );
-
-                            // append the rendered tempate to the panel
-                            var ul = self.$el.find('ul');
-
-                            // append/prepend list item to the ul
-                            if (widget.get('widgetName') == "overview") 
-                                ul.prepend(this.template);
-                            else 
-                                ul.append(this.template);
-
-                            // if this widget is visible by default
-                            if (widget.get('visible')) {
-
-                                widget.trigger('change:visible', widget);
-
-                                // make the checkbox appear checked
-                                $('#' + widget.get('widgetName') + '-option input').prop('checked', true);
-                            }
-
-                            $('#' + widget.get('widgetName') + '-option').trigger('create');
-
-                        } );
-
-                        self.$el.find('ul').listview();
-                    }
-                );
-
-                // Maintains chainability
                 return this;
+            },
 
+            reset: function() {
+
+                this.panelView.reset();
+                this.areaView.reset();
+
+                this.render();
             }
-
+  
         } );
 
         // Returns the View class

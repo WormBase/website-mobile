@@ -1,9 +1,9 @@
-// Widget Meta Model
+// Widget Model
 // =================
 
 define( [ "jquery", "backbone" ], function( $, Backbone) {
 
-    var WidgetMetaModel = Backbone.Model.extend( {
+    var WidgetModel = Backbone.Model.extend( {
 
         // Constructor
         initialize: function() {
@@ -16,7 +16,6 @@ define( [ "jquery", "backbone" ], function( $, Backbone) {
 
             this.set( { widgetName: this.get('name') } );
             this.set( { name: this.get('id') } );
-
         },
 
         // Define default attributes
@@ -26,6 +25,6 @@ define( [ "jquery", "backbone" ], function( $, Backbone) {
 
     } );
 
-    return WidgetMetaModel;
+    return WidgetModel;
 
 } );

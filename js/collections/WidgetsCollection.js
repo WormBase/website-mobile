@@ -41,7 +41,6 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
                 return array;
             },
 
-
 /*          Temporary: use this method only if staging or dev servers are not available
 
             // Overriding Backbone.fetch method

@@ -1,0 +1,23 @@
+<% if (typeof fields.genetic_position.data.chromosome !== 'undefined') {%>
+<div class="field">
+    <div class="field-title"><span title="<%= fields.genetic_position.description %>" rel="tooltip">Genetic position</span>:</div>
+    <div class="field-content"><%= fields.genetic_position.data.formatted %></div>
+</div>
+<% } %>
+
+<% if (fields.genomic_position.data !== null) {%>
+<div class="field">
+    <div class="field-title"><span title="<%= fields.genomic_position.description %>" rel="tooltip">Genomic position</span>:</div>
+    <% for (var index in fields.genomic_position.data) { %>
+        <div class="field-content"><a href="#"><%= fields.genomic_position.data[index].label %><a> &nbsp;</div>
+    <% } %>
+</div>
+<% } %>
+
+<br />
+
+<% if (fields.genomic_image.data !== null) {%>
+    <div>
+        <img src="http://www.wormbase.org/tools/genome/gbrowse_img/<%= fields.genomic_image.data.id%>;t=PRIMARY_GENE_TRACK;t=CLASSICAL_ALLELES" />
+    </div>
+<% } %>

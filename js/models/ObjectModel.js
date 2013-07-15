@@ -13,8 +13,8 @@ define([ "jquery",
 
             initialize: function() {
                 
-                this.widgetsList = new WidgetsCollection();
-                this.widgetsList.parent = this;
+                this.widgets = new WidgetsCollection();
+                this.widgets.parent = this;
             },
 
         } );
