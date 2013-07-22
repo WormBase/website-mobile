@@ -1,47 +1,57 @@
 /*
-===================================
+=====================================
     WIDGETS
-===================================
+=====================================
 */
 
-.fade 
+
+.detail-box-button 
 {
-    color: grey;
+    display: none; 
 }
 
-.species 
-{
-    font-style: italic;
+@media screen and (max-width: 480px) {
+    
+   .detail-box
+    {
+        display: none;
+    }
+
+    .detail-box-button 
+    {
+        display: block;
+    }
 }
 
-img
+.ev-more
 {
-    width: 100%;
+    cursor: pointer;
 }
 
-div.field 
+.ui-collapsible-content
 {
-  clear:left;
-  /*float:left;*/
-  line-height:1.2em;
-  padding:0.2em;
-  width:100%;
-  position:relative;
+    overflow: hidden;
 }
 
-div.field-title 
+.ui-table-columntoggle-btn
 {
-  float: left;
-  text-align: right; 
-  font-size: 1em;
-  padding:0 0.5em 0 0;
-  width: 10em;
-  font-weight: bold;
+    display: none;
 }
 
-div.field-content {
-  float: left;
-  max-width:100%;
+@media screen and (max-width: 768px) {
+
+    table 
+    {
+        font-size: 0.6em;
+    }
+}
+
+@media screen and (max-width: 460px) {
+
+    table 
+    {
+        font-size: 0.4em;
+    }
 }
 
 /*

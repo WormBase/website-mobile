@@ -132,43 +132,68 @@ define([ "jquery",
                 template = _.template(WidgetContainerTemplate, { "widget": self.model } );
                 self.$el.append(template).trigger('create');
 
-                // Retrieve all the fields for this widget from the server
-                self.model.fetch( {
 
-                    success: function() {
+                // look for the template file for this widget
+                require( ["text!../templates/classes/" + self.model.collection.parent.get('className') + "/" + self.model.get('widgetName') + ".html"], 
+                    
+                    // on SUCCESS, fetch JSON and render the template
+                    function(widgetTemplate) {
 
-                        // set the title in the header
-                        if (self.model.get('widgetName') == "overview")
-                           $('#object-page div[data-role=header] h1')[0].innerHTML = self.model.get('fields').name.data.label;
+                        // could be done better 
+                        url = self.model.url.split("=");
+                        url[1] = "application/json";
+                        self.model.url = url.join("=");
+                        self.model.parse = function(response) {return response};
 
-                        // look for the template file for this widget
-                        require( ["text!../templates/classes/" + self.model.collection.parent.get('className') + "/" + self.model.get('widgetName') + ".html"], 
-                            // on success, render it
-                            function(widgetTemplate) {
+                        self.model.fetch( {
 
+                            success:    function() {
+
+                                if (self.model.get('widgetName') == "overview")
+                                    $('#object-page div[data-role=header] h1')[0].innerHTML = self.model.get('fields').name.data.label;
+                                
                                 widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
                                 self.$el.find('.ui-collapsible-content').append(widgetContent).trigger('create');
+
                             },
 
-                            // on error, print error message
-                            function(err) { 
-
-                                widgetContent = "<p>The template file for this widget has not been implemented yet.</p>";
+                            error:      function() {
+                                widgetContent = "<p>Error while retrieving widget from the server</p>";
                                 self.$el.find('.ui-collapsible-content').append(widgetContent);
-                            }
-                        );
+                            },
+                        } );
+
+                        widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
+                        self.$el.find('.ui-collapsible-content').append(widgetContent).trigger('create');
                     },
 
-                    error: function() {
+                    // on ERROR, fetch the HTML template from the server
+                    function(err) { 
 
-                        widgetContent = "<p>Error while retrieving widget from the server</p>";
-                        self.$el.find('.ui-collapsible-content').append(widgetContent);
-                    },
+                        self.model.fetch( {
 
-                } );
-    
+                            dataType:   "html",
 
+                            // on success, put the html in the widget box
+                            success:    function() {
 
+                                html = self.model.get('html');
+
+                                processedHtml = self.processWidget( html );
+
+                                self.$el.find('.ui-collapsible-content').html( processedHtml ).trigger('create');
+
+                                //self.processWidget();
+                            },
+
+                            // on error, put an error in the widget box
+                            error:      function() {
+                                widgetContent = "<p>Error while retrieving widget from the server</p>";
+                                self.$el.find('.ui-collapsible-content').append(widgetContent);
+                            },
+                        } );
+                    }
+                );
             },
 
             hide: function() {
@@ -176,6 +201,169 @@ define([ "jquery",
                 this.$el.children("div").remove();
             },
 
+
+            processWidget: function(html) {
+
+                var self = this;
+
+                // Create a jQuery object for the html string 
+                var div = document.createElement('div');
+                div.innerHTML = html;
+                $dom = jQuery(div);
+
+                // Delete all <script> tags in the dom
+                $dom.find('script').remove();
+
+                // Delete external sequence popup widgets -- might get implemented later
+                $dom.find('.slink').remove();
+
+                // Fix URLs
+                this.fixLinks($dom);
+
+                // Add tooltips to all elements with a "title" attribute
+                $dom.find('*').each( function() {
+
+                    if ( this.title != "" )
+                        $(this).attr('rel', 'tooltip');
+                } );
+
+                // Reduce font size of some elements
+                $dom.find('#fade').each( function() {
+                    if ( $(this).css('font-size') == "0.7em" )
+                        $(this).css('font-size', '0.6em');
+                } );
+
+                // .toggle/.returned elements 
+                $dom.find('.toggle span').addClass('ui-icon-arrow-r');
+                // Bind .toggle to display .returned
+                this.$el.on('vclick', '.toggle', function() {
+                    
+                    // Assuming next element is always the .returned
+                    $(this).next().toggle();
+
+                    if ( $(this).find('span').hasClass('ui-icon-arrow-r') ) 
+                        $(this).find('span').removeClass('ui-icon-arrow-r').addClass('ui-icon-arrow-d');                        
+                    else 
+                        $(this).find('span').removeClass('ui-icon-arrow-d').addClass('ui-icon-arrow-r');
+                } );
+
+                // Fix evidence .ev-more
+                $dom.find('.ev-more').each( function() {
+
+                    $(this).prev().css('display', 'none');
+                    
+                    $(this).find('.ui-icon').addClass('ui-icon-arrow-d');
+                } );
+                this.$el.on('vclick', '.ev-more', function() {
+                    
+                    $(this).prev().toggle();
+
+                    if ( $(this).find('.ui-icon').hasClass('ui-icon-arrow-d') )
+                        $(this).find('.ui-icon').removeClass('ui-icon-arrow-d').addClass('ui-icon-arrow-u');
+                    else
+                        $(this).find('.ui-icon').removeClass('ui-icon-arrow-u').addClass('ui-icon-arrow-d');
+                } );
+
+                // Make .detail-box responsive
+                $dom.find('.detail-box').each( function() {
+
+                    // necessary to link button/popup
+                    var randId = Math.floor(Math.random() * 1000);
+
+                    // Create button
+                    $(this).before('<a class="detail-box-button" id="'+randId+'" data-mini="true" data-role="button">Details</a>');
+
+                    // Create popup
+                    $(this).clone().insertBefore(this);
+                    $(this).prev().attr('data-role', 'popup')
+                                  .attr('id', randId+'Popup')
+                                  .toggle();
+
+                    // bind click event
+                    self.$el.on('vclick', '#'+randId, function() {
+                        $('#'+randId+'Popup').popup('open');
+                    });
+                } );
+
+                // Fix tables
+                $dom.find('table').attr("data-role", "table")
+                                  .attr("data-mode", "columntoggle")
+                                  .addClass("ui-body-d", "ui-shadow", "table-stripe", "ui-responsive")
+                                  .find('thead tr').addClass("ui-bar-d");
+
+
+                return $dom.html();
+            },
+
+
+            fixLinks: function($dom) {
+
+                // Fix links
+                $dom.find('a').each( function() {
+
+                    // delete the host part of the url
+                    link = this.href.replace( window.location.origin + "/", "" );
+
+                    // check whether the url refers to an internal or external resource
+                    if (link.indexOf("http://") == -1) { 
+                        // internal - modify url accordingly
+
+                        var urlComponents = link.split("/");
+
+                        var action = null,
+                            className = null, 
+                            object = null;
+
+                        if (urlComponents[0] == "species" || urlComponents[0] == "resources" ) {
+
+                            action = "#object/";
+                                               
+                            if (urlComponents.length == 3) {
+                           
+                                className = urlComponents[1];
+                                object = urlComponents[2];
+                            }
+                            else if (urlComponents.length == 4) {
+
+                                className = urlComponents[2];
+                                object = urlComponents[3];
+                            }
+                        }
+                        else if (urlComponents[0] == "search") {
+
+                            action = "#search/";
+                            className = urlComponents[1];
+                            object = urlComponents[2];
+                        } 
+
+                        if (object !== null) {
+
+                            this.href = window.location.origin + window.location.pathname 
+                                      + action + className + "/" + object;
+                        }
+                        else {
+
+                            // for all unsupported urls - open the desktop website
+                            this.href = this.href.replace( window.location.origin, window.BASE_URL );   
+                            this.target = "_system"; 
+                        }
+                    }
+                    else {
+                        // external
+
+                        // modify "a" tag to indicate that it's an external resource
+                        this.target = "_system";
+                    }
+                } );
+
+                // Fix URLs for images
+                $dom.find('img').each( function() {
+
+                    this.src = this.src.replace( window.location.origin, window.BASE_URL );
+                } );
+
+                return $dom;
+            },
 
         } );
 

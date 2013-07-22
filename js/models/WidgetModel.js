@@ -8,14 +8,18 @@ define( [ "jquery", "backbone" ], function( $, Backbone) {
         // Constructor
         initialize: function() {
 
-            // Define the URL representing this widget on the server (this.url is used by the 'fetch' method)
-            this.url = BASE_URL + '/rest/widget/' 
-                      + this.collection.parent.get('className') + '/' 
-                      + this.collection.parent.get('id') + '/' 
-                      + this.get('name') + '?content-type=application/json';
-
             this.set( { widgetName: this.get('name') } );
             this.set( { name: this.get('id') } );
+
+            // Define the URL representing this widget on the server (this.url is used by the 'fetch' method)
+            this.url = window.BASE_URL + '/rest/widget/' 
+                      + this.collection.parent.get('className') + '/' 
+                      + this.collection.parent.get('id') + '/' 
+                      + this.get('widgetName') + '?content-type=text/html';
+
+            this.parse = function(response) {
+                return { "html": response};
+            };
         },
 
         // Define default attributes
