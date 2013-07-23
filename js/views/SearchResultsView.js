@@ -23,6 +23,7 @@ define([ "jquery",
 
                 // Instantiate a Search Results Collection
                 this.collection = new SearchResultsCollection();
+                this.collection.parent = this;
 
                 // bind this view to the add, remove and reset events of the collection
                 this.collection.on('add', this.add, this);
@@ -52,7 +53,7 @@ define([ "jquery",
 
                 // If the view has been rendered, then we immediately append the rendered search result
                 //if (this._rendered) {
-                    this.$el.append(entryView.render().el).trigger('create').listview().listview('refresh');
+                    this.$el.append(entryView.render().$el.html()).listview('refresh');
                     //this.$el.listview();
                // }
             },

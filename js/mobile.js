@@ -36,13 +36,25 @@ require([ "jquery", "backbone", "routers/mobileRouter" ], function( $, Backbone,
         // Set up the "mobileinit" handler before requiring jQuery Mobile's module
         function() {
 
-            // Prevents all anchor click handling including the addition of active button state and alternate link bluring.
-            $.mobile.linkBindingEnabled = false;
+            // Disable jQM routing and component creation events
+                // disable hash-routing
+                $.mobile.hashListeningEnabled = false;
+                // disable anchor-control
+                $.mobile.linkBindingEnabled = false;
+                // can cause calling object creation twice and back button issues are solved
+                $.mobile.ajaxEnabled = false;
+                // Otherwise after mobileinit, it tries to load a landing page
+                $.mobile.autoInitializePage = false;
+                // we want to handle caching and cleaning the DOM ourselves
+                $.mobile.page.prototype.options.domCache = false;
 
-            // Disabling this will prevent jQuery Mobile from handling hash changes
-            $.mobile.hashListeningEnabled = false;
+            // consider due to compatibility issues
+                // not supported by all browsers
+                $.mobile.pushStateEnabled = false;
+                // Solves phonegap issues with the back-button
+                $.mobile.phonegapNavigationEnabled = true;
         }
-    )
+    );
 
 
     require( [ "jquerymobile" ], function() {

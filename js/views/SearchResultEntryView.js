@@ -2,8 +2,10 @@
 // =========================
 
 // Includes file dependencies
-define([ "jquery", "backbone","models/SearchResultEntryModel" ], 
-    function( $, Backbone, SearchResultEntryModel ) {
+define([ "jquery", 
+         "backbone","models/SearchResultEntryModel",
+         "text!../../templates/app/search-result-entry.html" ], 
+    function( $, Backbone, SearchResultEntryModel, EntryTemplate ) {
 
         var SearchResultEntryView = Backbone.View.extend( {
 
@@ -22,18 +24,12 @@ define([ "jquery", "backbone","models/SearchResultEntryModel" ],
             // Renders a list item 
             render: function() {
 
-                var self = this;
+                // Sets the view's template property
+                template = _.template( EntryTemplate, { "object": this.model } );
 
-                require( ["text!../templates/app/search-result-entry.html"], function(entryTemplate) {
-
-                    // Sets the view's template property
-                    template = _.template( entryTemplate, { "object": self.model } );
-
-                    // Renders the view's template inside of the current listview element
-                    self.el.innerHTML = template;
+                // Renders the view's template inside of the current listview element
+                this.$el.html(template);
                     
-                } );
-
                 // Maintains chainability
                 return this;
             }
