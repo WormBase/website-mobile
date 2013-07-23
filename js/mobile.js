@@ -31,39 +31,33 @@ require.config( {
 // Includes File Dependencies
 require([ "jquery", "backbone", "routers/mobileRouter" ], function( $, Backbone, MobileRouter ) {
 
-    $( document ).on( "mobileinit",
+    // Set up the "mobileinit" handler before requiring jQuery Mobile's module
+    $( document ).on( "mobileinit", function() {
 
-        // Set up the "mobileinit" handler before requiring jQuery Mobile's module
-        function() {
+        // Disable jQM routing and component creation events
+            // disable hash-routing
+            $.mobile.hashListeningEnabled = false;
+            // disable anchor-control
+            $.mobile.linkBindingEnabled = false;
+            // can cause calling object creation twice and back button issues are solved
+            $.mobile.ajaxEnabled = false;
+            // we want to handle caching and cleaning the DOM ourselves
+            $.mobile.page.prototype.options.domCache = false;
 
-            // Disable jQM routing and component creation events
-                // disable hash-routing
-                $.mobile.hashListeningEnabled = false;
-                // disable anchor-control
-                $.mobile.linkBindingEnabled = false;
-                // can cause calling object creation twice and back button issues are solved
-                $.mobile.ajaxEnabled = false;
-                // Otherwise after mobileinit, it tries to load a landing page
-                $.mobile.autoInitializePage = false;
-                // we want to handle caching and cleaning the DOM ourselves
-                $.mobile.page.prototype.options.domCache = false;
-
-            // consider due to compatibility issues
-                // not supported by all browsers
-                $.mobile.pushStateEnabled = false;
-                // Solves phonegap issues with the back-button
-                $.mobile.phonegapNavigationEnabled = true;
-        }
-    );
-
+        // consider due to compatibility issues
+            // not supported by all browsers
+            $.mobile.pushStateEnabled = false;
+            // Solves phonegap issues with the back-button
+            $.mobile.phonegapNavigationEnabled = true;
+    } );
 
     require( [ "jquerymobile" ], function() {
 
-            // set to true if server cannot handle HTTP PUT or HTTP DELETE
-            Backbone.emulateHTTP = true;
+        // set to true if server cannot handle HTTP PUT or HTTP DELETE
+        Backbone.emulateHTTP = true;
 
-            // set to true if server cannot handle application/json requests
-            Backbone.emulateJSON = false;
+        // set to true if server cannot handle application/json requests
+        Backbone.emulateJSON = false;
 
         // Instantiates a new Backbone.js Mobile Router
         this.router = new MobileRouter();
