@@ -5,8 +5,8 @@ require.config( {
       paths: {
 
             // Core Libraries
-            "jquery":         "libs/jquery-1.10.1.min",
-            "jquerymobile":   "libs/jquery.mobile-1.3.1.min",
+            "jquery":         "libs/jquery-1.10.2.min",
+            "jquerymobile":   "libs/jquery.mobile-1.3.2.min",
             "underscore":     "libs/underscore-min",
             "backbone":       "libs/backbone-min",
             "text":           "libs/text"
