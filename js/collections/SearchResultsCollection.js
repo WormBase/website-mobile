@@ -24,6 +24,9 @@ define([ "jquery","backbone","models/SearchResultEntryModel" ],
             // Overriding the Backbone.parse method
             parse: function(response) {
 
+                // keep track of the total number of search results
+                this.totalResults = response.count;
+
                 return response.results;
 
             }, 

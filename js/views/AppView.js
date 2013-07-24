@@ -21,11 +21,12 @@ define([ "jquery",
                     this.searchPageView = new SearchPageView(); 
                     this.searchPageView.parent = this;
                 }
-                     
+
                 else if (className == undefined || query == undefined) 
                     $.mobile.changePage(this.searchPageView.$el.selector, { reverse: false, changeHash: false } );
 
                 if (className != undefined && query != undefined)
+
                     this.searchPageView.newSearch(className, query);
             },
 

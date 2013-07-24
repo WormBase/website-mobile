@@ -5,9 +5,10 @@
 define([ "jquery", 
          "backbone", 
          "collections/SearchTypesCollection", 
-         "views/SearchResultsView" ],
+         "views/SearchResultsView",
+         "text!../../templates/app/search-type-option.html" ],
 
-    function( $, Backbone, SearchTypesCollection, SearchResultsView ) {
+    function( $, Backbone, SearchTypesCollection, SearchResultsView, SearchTypeOptionTemplate ) {
 
         var SearchPageView = Backbone.View.extend( {
 
@@ -22,6 +23,8 @@ define([ "jquery",
                 // Show the jQM loading icon
                 $.mobile.loading("show");
 
+                var self = this;
+
                 // Fetch the data from the server
                 this.collection.fetch( {
 
@@ -32,15 +35,13 @@ define([ "jquery",
                         success: function() {
                         
                             // Go to the search page
-                            $.mobile.changePage( "#search-page", { reverse: false, changeHash: false } );
-                        
+                            $.mobile.changePage( self.$el.selector , { reverse: false, changeHash: false } );
                         },
 
                         // On error
                         error: function() {
                         
                             alert('error while initializing the search form');
-                        
                         }
                 } );
                 
@@ -68,28 +69,33 @@ define([ "jquery",
 
                 // Redirect to the URL that corresponds to the search with new params 
                 window.location.hash = "search/" + newClassName + "/" + newQuery;
-                
             },
 
             render: function() {
-                
-                var self = this;
 
-                require( ["text!../templates/app/search-type-option.html"], function(SearchTypeOption) { 
+                var dropdownMenu = this.$el.find('#search-dropdown');
 
-                    _.each(self.collection.models, function(model) {
+                _.each(this.collection.models, function(model) {
 
-                        template = _.template( SearchTypeOption, { "model": model } );
+                    template = _.template( SearchTypeOptionTemplate, { "model": model } );
 
-                        self.$el.find('#search-dropdown').append(template);
-                    } );
+                    dropdownMenu.append(template);
+                } );
                     
-                    // Let jQM refresh the dropdown
-                    self.$el.find('#search-dropdown').selectmenu().selectmenu('refresh');
-                }); 
+                // Let jQM refresh the dropdown
+                dropdownMenu.selectmenu().selectmenu('refresh');
             },
 
             newSearch: function(className, query) {
+
+                // Keep search form consistent
+                this.$el.find('input[name=search]').val(query);
+                
+                this.$el.find('#search-dropdown option').filter( function() {
+                    
+                    return this.id == className;
+                } ).prop('selected', true)
+                   .parent().selectmenu('refresh');
 
                 // Assign new className and query string to the collection object
                 this.searchResultsView.collection.className = className;

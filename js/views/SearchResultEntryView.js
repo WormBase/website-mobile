@@ -9,18 +9,6 @@ define([ "jquery",
 
         var SearchResultEntryView = Backbone.View.extend( {
 
-            events: {
-
-                "vclick": "viewObject",
-
-            },
-
-            viewObject: function() {    
-
-                // Redirect to the object page -- sorry, not a very good implementation
-                this.parent.parent.parent.gotoObject(this.model.get('name').class, this.model.get('name').id);
-            },
-
             // Renders a list item 
             render: function() {
 

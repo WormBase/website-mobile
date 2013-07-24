@@ -12,13 +12,16 @@ define([ "jquery",
         // Extends Backbone.View
         var SearchResultsView = Backbone.View.extend( {
 
+            // Set DOM element corresponding to this view
+            el: "#search-result-list",
+
             // The View Constructor
             initialize: function() {
 
                 // jQM initialization of the listview
                 this.$el.trigger('create');
 
-                // create an array of entry views to keep track of children
+                // create an array of entry views to keep track of children (useful in case of remove)
                 this._entryViews = [];
 
                 // Instantiate a Search Results Collection
@@ -27,110 +30,110 @@ define([ "jquery",
 
                 // bind this view to the add, remove and reset events of the collection
                 this.collection.on('add', this.add, this);
-                this.collection.on('remove', this.remove, this);
-                this.collection.on('reset', this.reset, this);
+                this.collection.on('reset', this.render, this);
 
                 /// detect when new search terms are given on input
                 this.listenTo(this.collection ,"change:searchTerms", this.newSearch);
 
             },
 
-            el: "#search-result-list",
+            // reset this view (empty the search results list)
+            render: function() {
+
+                this.$el.empty();
+            },
+
+            // Bind DOM events
+            events: {
+
+                "vclick #load-more": "loadMore"
+            },
+
+            // Load and display the next page of results
+            loadMore: function() {
+
+                // Remove the "Load More" item from the listview
+                this.$el.find("#load-more").remove();
+
+                // Update page to fetch 
+                this.collection.page++;
+
+                // Fetch results
+                this.fetchResults();
+
+            },
+
+            // Initiate a new search
+            newSearch: function() {
+
+                // Empty the collection 
+                this.collection.reset();
+
+                // Reset page to 1
+                this.collection.page = 1;
+
+                // Fetch results
+                this.fetchResults();
+            },
+
+            // Fetch results, triggers 'add' event
+            fetchResults: function() {
+
+                var self = this;
+
+                // Show the jQM loading icon
+                $.mobile.loading("show");
+
+                // Fetch results from server
+                this.collection.fetch( {
+
+                    // this makes Backbone to trigger the 'add' event
+                    add: true,
+
+                    // this prevents the collection from deleting all the old values
+                    remove: false,
+
+                    // On success, change page to the #search-page
+                    success: function(updatedCollection) {
+
+                        // If more results could be displayed, show a "load more" button
+                        if (updatedCollection.totalResults > updatedCollection.page * 10) {
+                            
+                            self.$el.append('<li id="load-more"><a>Load more results</a></li>');
+                        }
+
+                        // JQM re-enhance the listview 
+                        self.$el.listview('refresh');
+
+                        $.mobile.loading("hide");
+
+                        $.mobile.changePage(self.$el.selector, { changeHash: false } );
+                    },
+
+                    // Log the errors
+                    error: function() {
+                        alert('Error retrieving search results');
+                    }
+                } );
+            },
 
             // Add an entry to the view
             add: function(entry) {
 
                 // Create a result entry view for each entry that is added 
-                var entryView = new SearchResultEntryView({
-                    tagName: 'li',
-                    model: entry
-                });
+                var entryView = new SearchResultEntryView( { model: entry } );
 
                 entryView.parent = this;
 
                 // add it to the collection
                 this._entryViews.push(entryView);
 
-                // If the view has been rendered, then we immediately append the rendered search result
-                //if (this._rendered) {
-                    this.$el.append(entryView.render().$el.html()).listview('refresh');
-                    //this.$el.listview();
-               // }
+                // append the result to the view
+                this.$el.append( entryView.render().$el.html() );
             },
-
-            // Remove an entry from the view
-            remove: function(entry) {
-                
-                var viewToRemove = _(this._entryViews).select(function(cv) { return cv.model === entry; })[0];
-
-                this._entryViews = _(this._entryViews).without(viewToRemove);
-     
-                if (this._rendered) $(viewToRemove.el).remove();
-            },
-
-            // Resets this view (empty the search results list)
-            reset: function() {
-
-                this.$el.empty();
-
-            },
-
-            // Renders all of the models on the UI
-            render: function() {
-                
-                // We keep track of the rendered state of the view
-                this._rendered = true;
-             
-                $(this.el).empty();
-             
-                // Render each result entry View and append them.
-                _(this._entryViews).each(function(entry) {
-                  this.$el('ul').append(entry.render().el);
-                });
-             
-                // Maintains chainability
-                return this;
-                
-            },
-
-
-            newSearch: function() {
-
-                var self = this;
-
-                // Empty the collection of results
-                this.collection.reset();
-
-                // Show the jQM loading icon
-                $.mobile.loading("show");
-
-                // Fetch results from server
-                this.collection.fetch({
-
-                    // This makes Backbone to trigger the 'add' event
-                    add: true,
-
-                    // On success, change page to the #search-page
-                    success: function(result) {
-
-                        $.mobile.loading("hide");
-
-                        //$.mobile.changePage( "#search-page", { reverse: false, changeHash: false } ); 
-                    },
-
-                    // Log the errors
-                    error: function(result) {
-                        alert('error');
-                    }
-                });
-
-            }
-
-
         } );
 
         // Returns the View class
         return SearchResultsView;
-
     } 
 );
