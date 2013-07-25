@@ -28,6 +28,11 @@
     cursor: pointer;
 }
 
+.returned 
+{
+    overflow: inherit;
+}
+
 .ui-collapsible-content
 {
     overflow: hidden;
