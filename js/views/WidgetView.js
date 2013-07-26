@@ -172,6 +172,9 @@ define([ "jquery",
 
                         self.model.fetch( {
 
+                            cache: true,
+                            expires: false,
+
                             dataType:   "html",
 
                             // on success, put the html in the widget box

@@ -28,6 +28,9 @@ define([ "jquery",
                 // Fetch the data from the server
                 this.collection.fetch( {
 
+                        cache: true,
+                        expires: false,
+
                         // Explicitly trigger the collection reset event
                         reset: true,
 

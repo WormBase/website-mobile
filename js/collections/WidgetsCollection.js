@@ -35,10 +35,15 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
                                         ? true : false;
                     
                     array.push(response.data.widgets[widgetName]);
-     
                 }
-                
+
                 return array;
+            },
+
+            // For caching purposes
+            getCacheKey: function() {
+
+                return 'ObjectMeta' + ':' + this.parent.get('className')
             },
 
 /*          Temporary: use this method only if staging or dev servers are not available
@@ -82,7 +87,6 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
                 return xhr;
             },
 */
-            
         } );
 
         return WidgetsCollection;

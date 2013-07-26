@@ -40,8 +40,10 @@ define([ "jquery","backbone", "../views/AppView" ],
             // Home method
             home: function() {
 
+                this.appView.render();
+                
                 // Programatically changes to the home page
-                $.mobile.changePage( "#home" , { reverse: false, changeHash: false } );
+                $.mobile.changePage( "#home-page" , { reverse: false, changeHash: false } );
             },
 
             gotoSearchPage: function() {

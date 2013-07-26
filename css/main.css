@@ -28,6 +28,7 @@
     cursor: pointer;
 }
 
+.toggle,
 .returned 
 {
     overflow: inherit;

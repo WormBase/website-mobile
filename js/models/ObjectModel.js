@@ -17,6 +17,17 @@ define([ "jquery",
                 this.widgets.parent = this;
             },
 
+            url: function() {
+
+                return window.BASE_URL + '/rest/widget/' 
+                      + this.get('className') + '/' + this.get('id') 
+                      + '/overview?content-type=application/json';
+            },
+
+            getCacheKey: function() {
+
+                return "Object" + ":" + this.get('className') + ":" + this.get('id');
+            },
         } );
 
         // Returns the Model class

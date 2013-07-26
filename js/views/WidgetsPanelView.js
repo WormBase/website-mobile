@@ -18,6 +18,9 @@ define([ "jquery", "backbone"],
                 
                 var widgets = this.parent.model.widgets.models;
 
+                // append the rendered tempate to the panel
+                var ul = self.$el.find('ul');
+
                 // create the options in the panel
                 require( ["text!../templates/app/widget-panel-option.html"], 
                     function(WidgetPanelOption) {
@@ -25,16 +28,13 @@ define([ "jquery", "backbone"],
                         _.each( widgets, function(widget) {
 
                             // render the template
-                            this.template = _.template( WidgetPanelOption, { "widget": widget } );
-
-                            // append the rendered tempate to the panel
-                            var ul = self.$el.find('ul');
+                            template = _.template( WidgetPanelOption, { "widget": widget } );
 
                             // append/prepend list item to the ul
                             if (widget.get('widgetName') == "overview") 
-                                ul.prepend(this.template);
+                                ul.prepend(template);
                             else 
-                                ul.append(this.template);
+                                ul.append(template);
 
                             // if this widget is visible by default
                             if (widget.get('visible')) {
@@ -42,15 +42,14 @@ define([ "jquery", "backbone"],
                                 widget.trigger('change:visible', widget);
 
                                 // make the checkbox appear checked
-                                $('#' + widget.get('widgetName') + '-option input').prop('checked', true);
+                                ul.find('#' + widget.get('widgetName') + '-option input').prop('checked', true);
                             }
 
-                            $('#' + widget.get('widgetName') + '-option').trigger('create');
+                            ul.find('#' + widget.get('widgetName') + '-option').trigger('create');
 
                         } );
 
-                        self.$el.find('ul').listview();
-                        self.$el.trigger( "updatelayout" );
+                        ul.listview();
                     }
                 );
 

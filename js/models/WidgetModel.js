@@ -27,6 +27,15 @@ define( [ "jquery", "backbone" ], function( $, Backbone) {
             visible: false,
         },
 
+        // For caching purposes
+        getCacheKey: function() {
+
+            return 'Widget'
+                    + ':' + this.collection.parent.get('className')
+                    + ':' + this.collection.parent.get('id')
+                    + ':' + this.get('widgetName')
+        },
+
     } );
 
     return WidgetModel;

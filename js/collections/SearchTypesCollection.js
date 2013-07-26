@@ -12,20 +12,22 @@ define([ "jquery","backbone" ],
             parse: function(response) {
 
                 return response.data.option;
-
             }, 
 
             // Define the URL for search
             url: function() {
 
                 return window.BASE_URL + "/rest/config/search_dropdown?content-type=application/json"
+            },
 
-            }
-            
+            // For caching purposes
+            getCacheKey: function() {
+
+                return "SearchDropdown";
+            },
         } );
 
         // Returns the Model class
         return SearchTypesCollection;
-
     } 
 );

@@ -58,32 +58,50 @@ define([ "jquery",
                 widget.set( {visible: !widget.get('visible') } );
             },
 
-            el: "#object-page",
-
             changeObject: function() {
+
+                var self = this;
 
                 $.mobile.loading("show");
 
-                this.model.widgets.fetch({
+                this.model.fetch( {
+
+                    cache: true,
+                    expires: false,
 
                     reset: true,
 
                     success: function() {
 
-                        $.mobile.loading('hide');
+                        self.model.widgets.fetch({
+                            
+                            cache:true,
+                            expires: false,
 
-                        $.mobile.changePage("#object-page", { reverse: false, changeHash: false } );
+                            reset: true,
+
+                            success: function() {
+
+                                $.mobile.loading('hide');
+
+                                $.mobile.changePage( self.$el , { reverse: false, changeHash: false } );
+                            },
+
+                            error: function() {
+                                alert('error');
+                            }
+                        });
+
                     },
-
-                    error: function() {
-                        alert('error');
-                    }
-                });
+                } );
 
             },
 
             // renders options on the panel and placeholders on the areaview
             render: function() {
+
+                // put title in header
+                this.$el.find('div[data-role=header] h1').html( this.model.get('fields').name.data.label );
 
                 this.panelView.render();
                 this.areaView.render();

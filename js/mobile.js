@@ -4,32 +4,34 @@ require.config( {
       // 3rd party script alias names
       paths: {
 
-            // Core Libraries
-            "jquery":         "libs/jquery-1.10.2.min",
-            "jquerymobile":   "libs/jquery.mobile-1.3.2.min",
-            "underscore":     "libs/underscore-min",
-            "backbone":       "libs/backbone-min",
-            "text":           "libs/text"
-
+          // Core Libraries
+          "jquery":         "libs/jquery-1.10.2.min",
+          "jquerymobile":   "libs/jquery.mobile-1.3.2.min",
+          "underscore":     "libs/underscore-min",
+          "backbone":       "libs/backbone-min",
+          "text":           "libs/text",
+          "fetchcache":     "libs/backbone.fetch-cache"
       },
 
       // Sets the configuration for third party scripts that are not AMD compatible
       shim: {
 
             "backbone": {
-                  "deps": [ "underscore", "jquery" ],
-                  "exports": "Backbone"  //attaches "Backbone" to the window object
-            }
+                "deps": [ "underscore", "jquery" ],
+                "exports": "Backbone"  //attaches "Backbone" to the window object
+            },
 
+            "underscore": {
+                "exports": "_"
+            }
       }, 
 
       // For development purposes , this prevents require.js from caching scripts
       urlArgs: "timestamp=" + (new Date()).getTime()
-
 } );
 
 // Includes File Dependencies
-require([ "jquery", "backbone", "routers/mobileRouter" ], function( $, Backbone, MobileRouter ) {
+require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache" ], function( $, Backbone, MobileRouter ) {
 
     // Set up the "mobileinit" handler before requiring jQuery Mobile's module
     $( document ).on( "mobileinit", function() {
@@ -59,8 +61,18 @@ require([ "jquery", "backbone", "routers/mobileRouter" ], function( $, Backbone,
         // set to true if server cannot handle application/json requests
         Backbone.emulateJSON = false;
 
+        // Define custom cache keys
+        Backbone.fetchCache.getCacheKey = function(instance, options) {
+
+            try {
+                return instance.getCacheKey();
+            }
+            catch(err) {
+                return;
+            }
+        };
+
         // Instantiates a new Backbone.js Mobile Router
         this.router = new MobileRouter();
-
     } );
 } );

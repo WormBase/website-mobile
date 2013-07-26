@@ -16,7 +16,7 @@
   </head>
   <body>
     <!-- START home-page -->
-    <div data-role="page" id="home">
+    <div data-role="page" id="home-page">
 
       <div data-role="header">
         <a href="#settings" data-transition="slidefade" data-icon="gear">
@@ -29,7 +29,9 @@
       </div>
 
       <div data-role="content">
-        <!-- list of recently displayed data OR welcome screen-->
+        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search recents...">
+          <!-- list of recently displayed data OR welcome screen-->
+        </ul>
       </div>
 
     </div>
