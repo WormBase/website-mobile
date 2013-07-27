@@ -44,12 +44,9 @@ define([ "jquery", "backbone"],
                                 // make the checkbox appear checked
                                 ul.find('#' + widget.get('widgetName') + '-option input').prop('checked', true);
                             }
-
-                            ul.find('#' + widget.get('widgetName') + '-option').trigger('create');
-
                         } );
 
-                        ul.listview();
+                        ul.trigger('create').listview('refresh');
                     }
                 );
 
