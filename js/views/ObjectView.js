@@ -36,19 +36,6 @@ define([ "jquery",
 
                     self.panelView.$el.panel('open');
                 } );
-
-                this.panelView.$el.find('ul').on("click", "li", function() {
-
-                    var widgetName = $(this)[0].id.split('-')[0];
-
-                    // find the widget in the collection
-                    var widget = self.model.widgets.find( function(widget) { 
-                        return widget.get('widgetName') == widgetName; 
-                    } );
-
-                    self.toggleVisibility(widget);
-
-                } );
             },
 
             el: "#object-page",

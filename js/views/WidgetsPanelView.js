@@ -47,6 +47,18 @@ define([ "jquery", "backbone"],
                         } );
 
                         ul.trigger('create').listview('refresh');
+
+                        ul.find('li label').on("vclick", function() {
+
+                            var widgetName = $(this)[0].id.split('-')[0];
+
+                            // find the widget in the collection
+                            var widget = self.parent.model.widgets.find( function(widget) { 
+                                return widget.get('widgetName') == widgetName; 
+                            } );
+
+                            self.parent.toggleVisibility(widget);
+                        } );
                     }
                 );
 

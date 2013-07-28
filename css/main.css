@@ -39,6 +39,11 @@
     overflow: hidden;
 }
 
+.ui-panel-inner
+{
+    padding-right: 16px;
+}
+
 .ui-table-columntoggle-btn
 {
     display: none;
