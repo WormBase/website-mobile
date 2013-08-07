@@ -4,35 +4,681 @@
 =====================================
 */
 
+/* widget field titles: ie Identification > IDs */
+div.field {
+  clear:left;
+  float:left;
+  line-height:1.2em;
+  padding:0.2em;
+  width:100%;
+  position:relative;
+}
+
+div.field-title {
+  float: left;
+  text-align: right; 
+  font-size: 1em;
+  padding:0 0.5em 0.2em 0;
+  font-weight: bold;
+}
+
+div.field-content {
+  float: left;
+  max-width:100%;
+}
+
+.one-column div.field-title, .one-column div.field-content {
+  display:table-cell;
+  float:none;
+  position:static;
+  vertical-align:top;
+  table-layout:fixed;
+}
+
+/* Curator specific fields */
+div.field-curator {
+  margin:1em;
+  padding:1em;
+  background:#CCFFFF;
+  border:1px solid gray;
+  width:80%;
+}
+
+div.field-curator span.desc {
+  position:absolute;
+  right:0.4em;
+  bottom:0.2em;
+}
+
+
+
+
+/* Subfields: fields inside of fields */
+/* widget field titles: ie Identification > IDs */
+
+div.field .field .field-title {
+  width: 7em;
+}
+
+div.field .field .field-content {
+  max-width:35em;
+}
+
+
+
+/* Special field elements */
+/* Google Map */
+div#google-map { 
+    position:relative;
+    height: auto;
+    overflow:hidden;
+}
+
+
+/* dataheader and datacell are used in page-wide tables such as in the 
+   listing of all rearrangements by chrom on the rearrangment page */
+
+.code { 
+    background-color: #CCFFFF;
+    font-family: Courier, monospace;
+    border:1px solid grey;
+    font-size:1em;
+    margin:1em;
+    padding:0.5em;
+}
+
+.species { font-style: italic; }
+
+/* The variation summary */
+.cgc-strain {   /* strains available from the CGC */
+    font-style:italic;
+}
+
+.strains-with-single-variation {
+     font-weight:bold;
+}
+
+.toggle {
+    padding: 0.25em 0 0 0.3em;
+    cursor:pointer;
+    margin: 0 0 0 -0.4em;
+    overflow: inherit;
+}
+
+#overview-content .toggle{
+  clear:left;
+}
+
+.expr_patterns {
+  list-style-type: none;
+  padding:0;
+}
+
+.expr_patterns li a {
+  float:left;
+}
+
+.expr_patterns li {
+  margin-top:0.5em;
+  overflow:hidden;
+}
+
+
+div.detail-box{
+  border:1px solid #AAA;
+  background:#E9EEF2;
+  padding: 0.5em;
+  float:right;
+  margin:0.5em;
+  max-width:25em;
+/*   min-width:19em; */
+  word-wrap: break-word;
+}
+
+div.description {
+  clear:left;
+  padding:0.5em 0;
+  max-width:35em;
+}
+
+div.description div.result{
+  display:inline;
+}
+
+#overview .content h2:first-child{
+  float:left;
+}
+#overview .content h2:first-child span{
+  font-size:0.8em;
+}
+
+div.search-summary {
+  background:#E9EEF2;
+  padding: 0.5em 0.5em 0.5em 1.4em;
+  border-bottom: 1px solid #CDCDCD;
+}
+
+div#all-search-results {
+  float:left;
+}
+
+div.detail-box div.field div.field-title {
+  width: 8em;
+  padding-right: 0.5em;
+}
+
+div.detail-box div.field div.field-content{
+  margin-left:0;
+  min-width:8em;
+  max-width: 10em;
+}
+
+div.detail-box div.field div.field-title, div.detail-box div.field div.field-content {
+  display:table-cell;
+  float:none;
+  position:static;
+  vertical-align:top;
+  table-layout:fixed;
+}
+
+.bench-update {
+  float:right;
+}
+
+.disabled {
+/*  No box, just text only */
+/*  background:#EEE; */
+  color:#AAA;
+  display:none;
+}
+
+/*Strain table*/
+table tr.venn-a, table th.venn-a, table td.venn-a {
+  background:#BBEEFF;
+  min-height:1em;
+  min-width:1em;
+}
+
+table tr.venn-b, table th.venn-b, table td.venn-b {
+  background:#EEFF88;
+  min-height:1em;
+  min-width:1em;
+}
+
+table tr.venn-ab, table th.venn-ab, table td.venn-ab {
+  background:#BBFFAA;
+}
+
+table.venn tr.venn-data td {
+  max-width:8em;
+  vertical-align:top;
+}
+
+.text-min:hover div.more, div.more:hover, .result:hover div.ev-more-text span, .result:hover .v, div.columns div.ui-icon-close:hover {
+  opacity:1;
+  filter:alpha(opacity=100);
+  -moz-opacity:1;
+  color:black;
+}
+
+.result:hover .ev-more-text span{
+  background-color: #E9EEF2;
+}
+
+.ev-more-text {
+  text-align:center;
+  font-size:0.8em;
+  width:4em;
+  margin:0 auto;
+  padding-right:4em;
+}
+
+.ev-more-text span {
+  z-index:2;
+  position:absolute;
+  background-color:white;
+  padding:0 2px;
+  color:#999;
+  text-align:center;
+  width:4em;
+}
+
+tr.odd .ev-more-text span {
+  background-color:#E2E4FF;
+}
+
+.ev-more {
+  width:100%;
+  position:relative;
+  height:1em;
+  cursor: pointer;
+}
+
+.ev {
+  font-size:0.9em;
+}
+
+.ev-more .v {
+  position:absolute;
+  opacity:0.3;
+  filter:alpha(opacity=30);
+  -moz-opacity:0.3;
+  z-index:1;
+}
+
+.ev-more .ui-icon {
+  position:relative;
+  margin:0 auto 0;
+  top:0.7em;
+  z-index:3;
+  padding: 0;
+}
+
+.ev-more.open .ui-icon {
+  top:-6px;
+}
+
+.ev-more-line {
+  width:80%;
+  border-top:1px solid black;
+  position:absolute;
+  left:10%;
+  top:0.7em;
+}
+
+div.more {
+  cursor:pointer;
+  position:relative;
+  margin:0.5em 10% 0;
+  height:5px;
+  border-top:1px solid black;
+  opacity:0.3;
+  filter:alpha(opacity=30);
+  -moz-opacity:0.3;
+}
+
+div.more.open {
+  border-top:none;
+  border-bottom:1px solid black;
+}
+
+div.more .ui-icon {
+  position:relative;
+  margin: 0 auto;
+  top:-6px;
+}
+
+#fade {
+   color: #999999;
+   font-size: 0.8em;
+}
+
+.result {
+  padding:0 0.5em 0.5em;
+  position:relative;
+}
+
+.result.evidence{
+  padding:0;
+}
+
+.returned {
+   display:none;
+   padding:0 0 0.5em 1em;
+   overflow: inherit;
+}
+
+.text-width {
+  max-width:35em;
+}
+
+.paper-journal {
+    float: left;
+    padding-right: .2em;
+    position: relative;
+}
+
+#results ul {
+    margin: 0 -0.5em;
+    padding: .3em 0 0 0;
+    list-style-type: none;
+    font-size: 10pt;
+}
+
+
+
+
+
+tr.returned td:first-child 
+{
+    display: none;
+}
+
+table thead tr:first-child th:first-child
+{
+    display: none;
+}
+
+.toggle span 
+{
+    margin-right: 0.4em;
+}
+
+div.field-title {
+    text-align: left;
+}
+
+div.detail-box
+{
+    display: none;
+}
+
+div.detail-box-small
+{
+    display: block;
+}
 
 .detail-box-button 
 {
-    display: none; 
+    display: block;
 }
 
-@media screen and (max-width: 480px) {
-    
-   .detail-box
+.text-min-expand 
+{
+    overflow: hidden;
+    height: 2.4em;
+}
+
+tr.toggle
+{
+    display: table-row;
+}
+
+tr.returned {
+    display: none;
+}
+
+.table-3,
+.table-4
+{
+    table-layout: fixed;
+}
+
+table {
+    word-wrap: break-word;
+}
+
+@media ( min-width: 30em ) {
+
+    div.detail-box div.field div.field-content 
     {
-        display: none;
+        max-width: 100%;
+    }
+
+    div.detail-box
+    {
+        display: block;
     }
 
     .detail-box-button 
     {
-        display: block;
+        display: none; 
     }
 }
 
-.ev-more
-{
-    cursor: pointer;
+
+/* iPhone Portrait mode and bigger screens */
+@media ( min-width: 20em ) {
+
+    /* Show the table header rows and set all cells to display: table-cell */
+    .table-3 td,
+    .table-3 th,
+    .table-3 tbody th,
+    .table-3 tbody td,
+    .table-3 thead td,
+    .table-3 thead th {
+        display: table-cell;
+        margin: 0;
+    }
+    /* Hide the labels in each cell */
+    .table-3 td .ui-table-cell-label,
+    .table-3 th .ui-table-cell-label {
+        display: none;
+    }
+
+    .table-3 {
+        font-size: 0.8em;
+    }
+
+    .table-3 tr.returned 
+    {
+        display: table-row !important;
+        padding-left: 2em;
+    }
+
+    .table-3 tr.toggle 
+    {
+        display: none;
+    }
+
+    /* Show the table header rows and set all cells to display: table-cell */
+    .table-4 td,
+    .table-4 th,
+    .table-4 tbody th,
+    .table-4 tbody td,
+    .table-4 thead td,
+    .table-4 thead th {
+        display: table-cell;
+        margin: 0;
+    }
+
+    /* Hide the labels in each cell */
+    .table-4 td .ui-table-cell-label,
+    .table-4 th .ui-table-cell-label {
+        display: none;
+    }
+
+    .table-4 {
+        font-size: 0.7em;
+    }
+
+    .table-4 tr.returned 
+    {
+        display: table-row !important;
+        padding-left: 2em;
+    }
+
+    .table-4 tr.toggle 
+    {
+        display: none;
+    }
 }
 
-.toggle,
-.returned 
-{
-    overflow: inherit;
+/* Screens wider than iPhone portrait mode (most recent Android devices) */
+@media ( min-width: 22em ) {
+
+    .table-4 {
+        font-size: 0.8em;
+    }
 }
+
+/* Small tablets portrait, most phones landscape mode */ 
+@media ( min-width: 30em ) {
+    
+
+    .table-3,
+    .table-4
+    {
+        table-layout: auto;
+    }
+
+    /* Show the table header rows and set all cells to display: table-cell */
+    .table-5 td,
+    .table-5 th,
+    .table-5 tbody th,
+    .table-5 tbody td,
+    .table-5 thead td,
+    .table-5 thead th {
+        display: table-cell;
+        margin: 0;
+    }
+
+    /* Hide the labels in each cell */
+    .table-5 td .ui-table-cell-label,
+    .table-5 th .ui-table-cell-label {
+        display: none;
+    }
+
+    .table-5 {
+        font-size: 0.8em;
+    }
+
+    .table-5 tr.returned 
+    {
+        display: table-row !important;
+        padding-left: 2em;
+    }
+
+    .table-5 tr.toggle 
+    {
+        display: none;
+    }
+
+
+    /* Show the table header rows and set all cells to display: table-cell */
+    .table-6 td,
+    .table-6 th,
+    .table-6 tbody th,
+    .table-6 tbody td,
+    .table-6 thead td,
+    .table-6 thead th {
+        display: table-cell;
+        margin: 0;
+    }
+
+    /* Hide the labels in each cell */
+    .table-6 td .ui-table-cell-label,
+    .table-6 th .ui-table-cell-label {
+        display: none;
+    }
+
+    .table-6 {
+        font-size: 0.8em;
+    }
+
+    .table-6 tr.returned 
+    {
+        display: table-row !important;
+        padding-left: 2em;
+    }
+
+    .table-6 tr.toggle 
+    {
+        display: none;
+    }
+
+
+    /* Show the table header rows and set all cells to display: table-cell */
+    .table-7 td,
+    .table-7 th,
+    .table-7 tbody th,
+    .table-7 tbody td,
+    .table-7 thead td,
+    .table-7 thead th {
+        display: table-cell;
+        margin: 0;
+    }
+
+    /* Hide the labels in each cell */
+    .table-7 td .ui-table-cell-label,
+    .table-7 th .ui-table-cell-label {
+        display: none;
+    }
+
+    .table-7 {
+        font-size: 0.8em;
+    }
+
+    .table-7 tr.returned 
+    {
+        display: table-row !important;
+        padding-left: 2em;
+    }
+
+    .table-7 tr.toggle 
+    {
+        display: none;
+    }
+
+
+    /* Show the table header rows and set all cells to display: table-cell */
+    .table-8 td,
+    .table-8 th,
+    .table-8 tbody th,
+    .table-8 tbody td,
+    .table-8 thead td,
+    .table-8 thead th {
+        display: table-cell;
+        margin: 0;
+    }
+
+    /* Hide the labels in each cell */
+    .table-8 td .ui-table-cell-label,
+    .table-8 th .ui-table-cell-label {
+        display: none;
+    }
+
+    .table-8 {
+        font-size: 0.6em;
+    }
+
+    .table-8 tr.returned 
+    {
+        display: table-row !important;
+        padding-left: 2em;
+    }
+
+    .table-8 tr.toggle 
+    {
+        display: none;
+    }
+
+    .table-5,
+    .table-6, 
+    .table-7,
+    .table-8
+    {
+        table-layout: fixed;
+    }
+
+}
+
+@media ( min-width: 40em) {
+
+    .table-8 {
+        font-size: 0.8em;
+    }
+
+    .table-5, 
+    .table-6 {
+        table-layout: auto;
+    }
+}
+
+
+@media ( min-width: 60em) {
+
+    table {
+        font-size: 1em;
+        table-layout: auto;
+    }
+}
+
+/*
+====================================
+    JQM 
+====================================
+*/
 
 .ui-collapsible-content
 {
@@ -49,19 +695,11 @@
     display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media only all {
 
-    table 
+    .ui-table-reflow td .ui-table-cell-label, .ui-table-reflow th .ui-table-cell-label 
     {
-        font-size: 0.6em;
-    }
-}
-
-@media screen and (max-width: 460px) {
-
-    table 
-    {
-        font-size: 0.4em;
+        min-width: 0;
     }
 }
 

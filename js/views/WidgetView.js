@@ -217,14 +217,24 @@ define([ "jquery",
                 // Delete all <script> tags in the dom
                 $dom.find('script').remove();
 
+                // Delete CytoscapeWeb components (they require flash)
+                $dom.find('#cyto_legend').remove();
+                $dom.find('#cytoscapeweb').remove();
+
                 // Delete external sequence popup widgets -- might get implemented later
                 $dom.find('.slink').remove();
+
+                // Remove stars in references widget
+                $dom.find('.load-star').remove();
+
+                // Remove search count summary in References widget
+                $dom.find('#search-count-summary').remove();
 
                 // Fix URLs
                 this.fixLinks($dom);
 
-                // Add tooltips to all elements with a "title" attribute
-                $dom.find('*').each( function() {
+                // Add tooltips to all span elements with a "title" attribute
+                $dom.find('span').each( function() {
 
                     if ( this.title != "" )
                         $(this).attr('rel', 'tooltip');
@@ -270,30 +280,81 @@ define([ "jquery",
                 // Make .detail-box responsive
                 $dom.find('.detail-box').each( function() {
 
-                    // necessary to link button/popup
-                    var randId = Math.floor(Math.random() * 1000);
+                    if ( $(this).find('.field').length > 2) {
 
-                    // Create button
-                    $(this).before('<a class="detail-box-button" id="'+randId+'" data-mini="true" data-role="button">Details</a>');
+                        // necessary to link button/popup
+                        var randId = Math.floor(Math.random() * 1000);
 
-                    // Create popup
-                    $(this).clone().insertBefore(this);
-                    $(this).prev().attr('data-role', 'popup')
-                                  .attr('id', randId+'Popup')
-                                  .toggle();
+                        // Create button
+                        $(this).before('<a class="detail-box-button" id="'+randId+'" data-mini="true" data-role="button">Details</a>');
 
-                    // bind click event
-                    self.$el.on('vclick', '#'+randId, function() {
-                        $('#'+randId+'Popup').popup('open');
-                    });
+                        // Create popup
+                        $(this).clone().insertBefore(this);
+                        $(this).prev().attr('data-role', 'popup')
+                                      .attr('id', randId+'Popup')
+                                      .toggle();
+
+                        // bind click event
+                        self.$el.on('vclick', '#'+randId, function() {
+                            $('#'+randId+'Popup').popup('open');
+                        });
+                    }
+                    else {
+                        $(this).addClass('detail-box-small');
+                    }
                 } );
 
-                // Fix tables
-                $dom.find('table').attr("data-role", "table")
-                                  .attr("data-mode", "columntoggle")
-                                  .addClass("ui-body-d", "ui-shadow", "table-stripe", "ui-responsive")
-                                  .find('thead tr').addClass("ui-bar-d");
+                // Fix "Read more"
+                $dom.find('.text-min').each( function() {
 
+                    $(this).wrapInner('<div class="text-min-expand" />')
+                           .append('<div class="more"> <div class="ui-icon ui-icon-arrow-d" style="margin-top: 0.2em"> </div> </div>');
+                } );
+                this.$el.on('vclick', '.more', function() {
+
+                    $(this).prev().toggleClass("text-min-expand");
+
+                    if ( $(this).find('.ui-icon').hasClass('ui-icon-arrow-d') )
+                        $(this).find('.ui-icon').removeClass('ui-icon-arrow-d').addClass('ui-icon-arrow-u');
+                    else
+                        $(this).find('.ui-icon').removeClass('ui-icon-arrow-u').addClass('ui-icon-arrow-d');
+                } );
+
+                // Fix "load results" on references widget
+                $dom.find('.load-results').each( function() {
+
+                    var url = $(this).attr('href').split('/');
+
+                    $(this).before('<a href="#search/' + url[2] + '/' + url[3] + '" data-role="button" data-mini="true">See more results</a>');
+                } ). remove();
+
+                // Make tables responsive
+                $dom.find('table').each( function() {
+
+                    $(this).attr("data-role", "table")
+                           .addClass("table-stroke")
+                           .find('thead tr').addClass("ui-bar-d");
+
+                    var noOfColumns = $(this).find('thead tr th').length;
+
+                    if ( noOfColumns <= 3 )
+                        $(this).addClass('table-3');
+                    else if (noOfColumns >= 8)
+                        $(this).addClass('table-8');
+                    else
+                        $(this).addClass('table-' + noOfColumns);
+
+                    $(this).find('thead tr').prepend('<th></th>');
+                    $(this).find('tbody tr').each( function() {
+                        $(this).addClass("returned")
+                               .prepend('<td></td>')
+                               .before('<tr class="toggle"><td><span style="float:left" class="ui-icon ui-icon-arrow-r"></span>' 
+                                        + $(this).find("td:nth-child(2)").text()
+                                        + '</td></tr>');
+                    } );
+
+
+                } );
 
                 return $dom.html();
             },
@@ -308,7 +369,7 @@ define([ "jquery",
                     link = this.href.replace( window.location.origin + "/", "" );
 
                     // check whether the url refers to an internal or external resource
-                    if (link.indexOf("http://") == -1) { 
+                    if (link.indexOf("http://") == -1 && link.indexOf("https://") == -1) { 
                         // internal - modify url accordingly
 
                         var urlComponents = link.split("/");
