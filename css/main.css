@@ -325,7 +325,7 @@ div.more .ui-icon {
 .returned {
    display:none;
    padding:0 0 0.5em 1em;
-   overflow: inherit;
+   overflow: hidden;
 }
 
 .text-width {
@@ -345,6 +345,20 @@ div.more .ui-icon {
     font-size: 10pt;
 }
 
+.sequence-container {
+    font-family: Courier,monospace;
+    font-size: .8em;
+    overflow: hidden;
+    clear: both;
+    margin: 5px;
+    max-width: 55em;
+    word-wrap: break-word;
+}
+
+.caveat-emptor {
+    font-style: italic;
+    color: gray;
+}
 
 
 

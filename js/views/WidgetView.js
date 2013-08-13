@@ -230,6 +230,16 @@ define([ "jquery",
                 // Remove search count summary in References widget
                 $dom.find('#search-count-summary').remove();
 
+                // Remove sequence download (buttons and content)
+                $dom.find('.sequence-download').remove();
+                $dom.find('.generate-file-download').remove();
+
+                //  Strain -> natural isolates, remove google map (possible to implement later)
+                $dom.find('#google-map-inline').remove();
+
+                // Remove BLAST details popup
+                $dom.find('#blast-details').remove();
+
                 // Fix URLs
                 this.fixLinks($dom);
 
@@ -247,7 +257,8 @@ define([ "jquery",
                 } );
 
                 // .toggle/.returned elements 
-                $dom.find('.toggle span').addClass('ui-icon-arrow-r');
+                $dom.find('.toggle').next().css('display', 'none');
+                $dom.find('.toggle span').addClass('ui-icon-arrow-r')
                 // Bind .toggle to display .returned
                 this.$el.on('vclick', '.toggle', function() {
                     
@@ -345,16 +356,46 @@ define([ "jquery",
                         $(this).addClass('table-' + noOfColumns);
 
                     $(this).find('thead tr').prepend('<th></th>');
+
+                    var toggleTextElement;
+                    switch (this.id) {
+                        
+                        case "table_natural_isolates_by":   toggleTextElement = 2;
+                                                            break;
+
+                        case "table_motif_details_by":      toggleTextElement = 2;
+                                                            break;
+                        default:                            toggleTextElement = 1;
+                                                            break;
+                    }
+
+                    if ( this.id == "table_natural_isolates_by" ) 
+                        toggleTextElement = 2;
+                    else 
+                        toggleTextElement = 1;
+                    
                     $(this).find('tbody tr').each( function() {
+
+                        toggleText = $(this).find('td:nth-child('+ toggleTextElement +')').text();
+
                         $(this).addClass("returned")
                                .prepend('<td></td>')
                                .before('<tr class="toggle"><td><span style="float:left" class="ui-icon ui-icon-arrow-r"></span>' 
-                                        + $(this).find("td:nth-child(2)").text()
+                                        + toggleText
                                         + '</td></tr>');
                     } );
 
 
                 } );
+
+                // Displaying sequences - remove breaks, use css instead
+                $dom.find('.sequence-container br:not(:first)').remove();
+                
+                // Remove css prop "white-space: nowrap on some elements" 
+                $dom.find('div').filter( function() {
+                    return this.style.whiteSpace == 'nowrap'
+                } ).css('white-space', '');
+
 
                 return $dom.html();
             },
