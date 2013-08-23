@@ -13,7 +13,8 @@ define([ "jquery","backbone","models/SearchResultEntryModel" ],
 
                 // Sets the default instance properties
                 this.className = "",
-                this.query     = "", 
+                this.query     = "*", 
+                this.species   = "all",
                 this.page      = 1
 
             },
@@ -36,7 +37,7 @@ define([ "jquery","backbone","models/SearchResultEntryModel" ],
 
                 return  window.BASE_URL + "/search/" 
                         + this.className + "/" + this.query + "/" + this.page 
-                        + "?content-type=application/json";
+                        + "?species=" + this.species + "&content-type=application/json";
 
             }
             

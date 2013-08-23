@@ -40,7 +40,9 @@ define([ "jquery",
             // reset this view (empty the search results list)
             render: function() {
 
-                this.$el.empty();
+                this.$ul = this.parent.$el.find( this.$el.selector );
+
+                this.$ul.empty();
             },
 
             // Bind DOM events
@@ -81,6 +83,8 @@ define([ "jquery",
 
                 var self = this;
 
+                var $ul = this.$ul;
+
                 // Show the jQM loading icon
                 $.mobile.loading("show");
 
@@ -98,16 +102,18 @@ define([ "jquery",
 
                         // If more results could be displayed, show a "load more" button
                         if (updatedCollection.totalResults > updatedCollection.page * 10) {
-                            
-                            self.$el.append('<li id="load-more"><a>Load more results</a></li>');
+
+                            $ul.append('<li id="load-more"><a>Load more results</a></li>');
                         }
 
-                        // JQM re-enhance the listview 
-                        self.$el.listview('refresh');
+                        if ( $ul.hasClass('ui-listview') )
+                            $ul.listview('refresh');
+                        else
+                            $ul.trigger('create');
 
                         $.mobile.loading("hide");
 
-                        $.mobile.changePage(self.$el.selector, { changeHash: false } );
+                        $.mobile.changePage(self.parent.$el.selector, { changeHash: false } );
                     },
 
                     // Log the errors
@@ -119,7 +125,6 @@ define([ "jquery",
 
             // Add an entry to the view
             add: function(entry) {
-
                 // Create a result entry view for each entry that is added 
                 var entryView = new SearchResultEntryView( { model: entry } );
 
@@ -129,7 +134,7 @@ define([ "jquery",
                 this._entryViews.push(entryView);
 
                 // append the result to the view
-                this.$el.append( entryView.render().$el.html() );
+                this.$ul.append( entryView.render().$el.html() );
             },
         } );
 

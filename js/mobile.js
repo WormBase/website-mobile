@@ -10,7 +10,8 @@ require.config( {
           "underscore":     "libs/underscore-min",
           "backbone":       "libs/backbone-min",
           "text":           "libs/text",
-          "fetchcache":     "libs/backbone.fetch-cache"
+          "fetchcache":     "libs/backbone.fetch-cache",
+          "pluralize":      "libs/pluralize",
       },
 
       // Sets the configuration for third party scripts that are not AMD compatible
@@ -23,7 +24,11 @@ require.config( {
 
             "underscore": {
                 "exports": "_"
-            }
+            },
+
+            "pluralize": {
+                "exports": "owl"
+            },
       }, 
 
       // For development purposes , this prevents require.js from caching scripts

@@ -26,22 +26,27 @@ define([ "jquery","backbone", "../views/AppView" ],
             // Backbone.js Routes
             routes: {
 
-                "":                             "home",
+                "":                                          "home",
 
-                "home":                         "home",
+                "home":                                      "home",
 
-                "search":                       "gotoSearchPage",
+                "search":                                    "gotoSearchPage",
 
-                "search/:className/:query":     "search",
+                "search/:className/:query":                  "search",
 
-                "object/:className/:id":        "object"
+                "object/:className/:id":                     "object",
+
+                "resources(/:type)(/:query)(/)":             "resources",
+
+                "species(/:genus)(/:specie)(/:className)(/:query)(/)":   "species",
+
             },
 
             // Home method
             home: function() {
 
                 this.appView.render();
-                
+
                 // Programatically changes to the home page
                 $.mobile.changePage( "#home-page" , { reverse: false, changeHash: false } );
             },
@@ -59,8 +64,17 @@ define([ "jquery","backbone", "../views/AppView" ],
             object: function(className, id) {
 
                 this.appView.gotoObject(className.toLowerCase(), id);
-            }
+            },
 
+            resources: function(type, query) {
+
+                this.appView.browseResources(type, query);
+            },
+
+            species: function(genus, specie, className, query) {
+
+                this.appView.browseSpecies(genus, specie, className, query);
+            },
         } );
 
         // Returns the Router class

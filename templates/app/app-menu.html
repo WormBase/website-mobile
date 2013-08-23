@@ -1,0 +1,31 @@
+<div data-role="panel" id="menu-panel" >
+    
+    <%
+    var $ul = $( document.createElement('ul') );
+        
+    $ul.attr('data-role', 'listview')
+       .attr('id', 'menu-panel-list')
+
+    $ul.append(''
+        + '<li data-icon="false"><a href="#home">Recents</a></li>'
+        + '<li data-icon="false"><a href="#search">Search</a></li>'
+        + '<li data-icon="false"><a href="#species">Browse Species</a></li>'
+        + '<li data-icon="false"><a href="#resources">Browse Resources</a></li>'
+        + '<li data-icon="false"><a href="#about">About</a></li>'
+        + '<li data-icon="false"><a href="http://www.wormbase.org" target="_system">Go to desktop website</a></li>'
+    ); 
+
+    var route = window.location.hash.split('/')[0];
+    if ( route == '' )
+        $ul.find('li').first().attr('data-theme', 'a');
+    else
+        $ul.find('li').each( function() {
+            if ( route == $(this).find('a').first().attr('href') )
+                $(this).attr('data-theme', 'a');
+        } );
+    %>
+
+    <%= $ul.wrapAll('<div />').parent().html() %>
+
+</div>
+

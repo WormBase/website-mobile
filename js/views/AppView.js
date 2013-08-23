@@ -4,15 +4,53 @@
 // Includes file dependencies
 define([ "jquery", 
          "backbone", 
+         "views/HomeView",
          "views/SearchPageView", 
-         "views/ObjectView",
-         "text!../../templates/app/recent-element-item.html" ],
+         "views/ObjectView", 
+         "views/BrowseResourcesView",
+         "views/BrowseSpeciesView",
+         "views/FilteredSearchView" ],
 
-    function( $, Backbone, SearchPageView, ObjectView, RecentElementItemTemplate ) {
+    function( $, Backbone, HomeView, SearchPageView, ObjectView, BrowseResourcesView, BrowseSpeciesView, FilteredSearchView ) {
 
         var AppView = Backbone.View.extend( {
 
             el: "body", 
+
+            initialize: function() {
+
+                var self = this;
+
+                this.homeView = new HomeView();
+                this.homeView.parent = this;
+
+                this.browseSpeciesView = new BrowseSpeciesView();
+                this.browseSpeciesView.parent = this;
+
+                this.browseResourcesView = new BrowseResourcesView();
+                this.browseResourcesView.parent = this;
+
+                this.filteredView = new FilteredSearchView();
+                this.filteredView.parent = this;
+
+                this.options = {
+
+                    cache: true,
+                    expires: false,
+
+                    reset: true,
+
+                    success: function() {
+
+                        $.mobile.loader('hide');
+                        $.mobile.changePage( self.browseSpeciesView.$el.selector, { changeHash: false, allowSamePageTransition: true } );
+                    },
+
+                    error: function() {
+                        alert('error');
+                    },
+                };
+            },
 
             // calling this method without arguments will bring the user to the search page
             search: function(className, query) {
@@ -44,43 +82,34 @@ define([ "jquery",
                 $.mobile.changePage(this.objectView.$el.selector, { reverse: false, changeHash: false } );
             },
 
-            render: function() {
+            browseResources: function(type, query) {
 
-                var ul = this.$el.find('#home-page div[data-role=content] ul');
+                $.mobile.loader('show');
 
-                ul.empty();
+                if ( type == null )
+                    this.browseResourcesView.collection.fetch( this.options );
+                else if ( query == null )
+                    this.filteredView.newSearch( type, 'all', '*');
+                else 
+                    this.filteredView.newSearch( type, 'all', query);
 
-                var cache = JSON.parse( localStorage['backboneCache'] );
+            },
 
-                var cachedObjects = []; 
+            browseSpecies: function(genus, specie, className, query) {
 
-                for (var key in cache) {
+                $.mobile.loader('show');
 
-                    splittedKey = key.split(":");
+                if ( genus == null )
+                    this.browseSpeciesView.fetchGenusList( this.options );
+                else if ( specie == null )
+                    this.browseSpeciesView.fetchSpeciesList( genus, this.options );
+                else if ( className == null )
+                    this.browseSpeciesView.fetchAvailableClassesList( specie, this.options );
+                else if ( query == null )
+                    this.filteredView.newSearch( className, specie, '*' );
+                else 
+                    this.filteredView.newSearch( className, specie, query);
 
-                    if (splittedKey[0] == "Object") {
-
-                        cachedObjects.push( cache[key] );
-                    }
-                }
-
-                cachedObjects.sort( function(a, b) {
-
-                    keyA = a.lastAccessedOn;
-                    keyB = b.lastAccessedOn;
-                    if(keyA > keyB) return -1;
-                    if(keyA < keyB) return 1;
-                    return 0;
-                } );
-
-                _.each(cachedObjects, function(object) {
-
-                    template = _.template( RecentElementItemTemplate, { 'object': object.value.fields.name.data } );
-
-                    ul.append(template);
-                } );
-
-                ul.listview('refresh');
             },
         } );
 

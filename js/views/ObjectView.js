@@ -6,15 +6,19 @@ define([ "jquery",
          "backbone",
          "models/ObjectModel",
          "views/WidgetsPanelView",
-         "views/WidgetsAreaView" ], 
+         "views/WidgetsAreaView",
+         "text!../../templates/app/app-menu.html" ], 
 
-    function( $, Backbone, ObjectModel, WidgetsPanelView, WidgetsAreaView ) {
+    function( $, Backbone, ObjectModel, WidgetsPanelView, WidgetsAreaView, AppMenuTemplate ) {
 
         // Extends Backbone.View
         var ObjectView = Backbone.View.extend( {
 
             // The View Constructor
             initialize: function() {
+
+                // Render side app menu
+                this.$el.append( _.template( AppMenuTemplate, {} ) );
 
                 var self = this;
 
@@ -32,9 +36,15 @@ define([ "jquery",
                 this.model.on("change:id", this.changeObject, this);
 
                 // Bind event to open the panel
-                this.$el.find('#openPanelButton').on("vclick", function() {
+                this.$el.find('#openWidgetsPanelButton').on("vclick", function() {
+                    self.panelView.$el.panel('toggle');
+                    self.$el.find('#menu-panel').panel('close');
+                } );                
 
-                    self.panelView.$el.panel('open');
+                // Bind event to open the panel
+                this.$el.find('#openAppMenuButton').on("vclick", function() {
+                    self.$el.find('#menu-panel').panel('toggle');
+                    self.panelView.$el.panel('close');
                 } );
             },
 

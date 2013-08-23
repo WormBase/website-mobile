@@ -6,9 +6,10 @@ define([ "jquery",
          "backbone", 
          "collections/SearchTypesCollection", 
          "views/SearchResultsView",
+         "text!../../templates/app/app-menu.html", 
          "text!../../templates/app/search-type-option.html" ],
 
-    function( $, Backbone, SearchTypesCollection, SearchResultsView, SearchTypeOptionTemplate ) {
+    function( $, Backbone, SearchTypesCollection, SearchResultsView, AppMenuTemplate, SearchTypeOptionTemplate ) {
 
         var SearchPageView = Backbone.View.extend( {
 
@@ -52,6 +53,10 @@ define([ "jquery",
                 this.searchResultsView = new SearchResultsView( { el: "#search-result-list" } );
                 this.searchResultsView.parent = this;
 
+
+                // Render side app menu
+                this.$el.append( _.template(AppMenuTemplate, {} ) );
+
             },
 
             // Defines the HTML element for this view
@@ -76,6 +81,7 @@ define([ "jquery",
 
             render: function() {
 
+                // Render dropdown menu
                 var dropdownMenu = this.$el.find('#search-dropdown');
 
                 _.each(this.collection.models, function(model) {
