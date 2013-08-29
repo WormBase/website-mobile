@@ -25,9 +25,9 @@ define([ "jquery",
                 this.$el.trigger('create');
 
                 // Populate the home screen with recents list
-                var ul = this.$el.find('div[data-role=content] ul');
+                var $ul = this.$el.find('div[data-role=content] ul');
 
-                ul.empty();
+                $ul.empty();
 
                 var cache = JSON.parse( localStorage['backboneCache'] );
 
@@ -56,10 +56,10 @@ define([ "jquery",
 
                     template = _.template( RecentElementItemTemplate, { 'object': object.value.fields.name.data } );
 
-                    ul.append(template);
+                    $ul.append(template);
                 } );
 
-                ul.listview('refresh');
+                $ul.listview('refresh');
             },
         } );
 

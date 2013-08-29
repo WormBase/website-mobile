@@ -56,6 +56,13 @@ require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache" ], function
             $.mobile.pushStateEnabled = false;
             // Solves phonegap issues with the back-button
             $.mobile.phonegapNavigationEnabled = true;
+
+        $.mobile.defaultPageTransition = "slide";
+/*
+        $.mobile.page.prototype.options.theme = "a";
+        $.mobile.page.prototype.options.contentTheme = "a";
+        $.mobile.panel.prototype.options.theme = "a";
+*/
     } );
 
     require( [ "jquerymobile" ], function() {

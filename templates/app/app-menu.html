@@ -17,11 +17,11 @@
 
     var route = window.location.hash.split('/')[0];
     if ( route == '' )
-        $ul.find('li').first().attr('data-theme', 'a');
+        $ul.find('li').first().attr('data-theme', 'b');
     else
         $ul.find('li').each( function() {
             if ( route == $(this).find('a').first().attr('href') )
-                $(this).attr('data-theme', 'a');
+                $(this).attr('data-theme', 'b');
         } );
     %>
 

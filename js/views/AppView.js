@@ -92,7 +92,6 @@ define([ "jquery",
                     this.filteredView.newSearch( type, 'all', '*');
                 else 
                     this.filteredView.newSearch( type, 'all', query);
-
             },
 
             browseSpecies: function(genus, specie, className, query) {
@@ -109,7 +108,6 @@ define([ "jquery",
                     this.filteredView.newSearch( className, specie, '*' );
                 else 
                     this.filteredView.newSearch( className, specie, query);
-
             },
         } );
 
