@@ -29,7 +29,12 @@ define([ "jquery",
 
                 $ul.empty();
 
-                var cache = JSON.parse( localStorage['backboneCache'] );
+                try {
+                    var cache = JSON.parse( localStorage['backboneCache'] );
+                } 
+                catch (e) {
+                    var cache = {};
+                }
 
                 var cachedObjects = []; 
 
