@@ -6,11 +6,9 @@
 
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-
     <title>WormBase</title>
 
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
-
 
     <link rel="stylesheet" href="./css/WormBase-jqm-theme.css" />
     <link rel="stylesheet" href="./css/jquery.mobile.structure-1.3.2.css" />
@@ -20,9 +18,9 @@
 
   </head>
   <body>
+
     <!-- START home-page -->
     <div data-role="page" id="home-page">
-
       <div data-role="header" data-position="fixed">
         <a href="#menu-panel" data-icon="bars" data-iconpos="notext" >Menu</a>
         <h1>WormBase</h1>
@@ -30,15 +28,36 @@
           Search
         </a>
       </div>
-
       <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter recents..." >
-          <!-- list of recently displayed data OR welcome screen-->
-        </ul>
+        <div id="home-content">
+          <h1>Explore Worm Biology</h1>
+          <p>facilitating insights into <br /> nematode biology<br /></p>
+          <a href="#recents" data-role="button" data-inline="true" data-theme="d">Recents</a>
+          <a href="#search" data-role="button" data-inline="true" data-theme="b">Search</a>
+        </div>  
+        <!--
+        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter recents..." ></ul>
+        -->
       </div>
-
     </div>
     <!--END home-page -->
+
+    <!-- START recents-page -->
+    <div data-role="page" id="recents-page">
+      <div data-role="header" data-position="fixed">
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" >Menu</a>
+        <h1>WormBase</h1>
+        <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext">
+          Search
+        </a>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter recents..." >
+          
+        </ul>
+      </div>
+    </div>
+    <!--END recents-page -->
 
     <!-- START search-page -->
     <div data-role="page" id="search-page">

@@ -13,7 +13,7 @@ define([ "jquery","backbone", "../views/AppView" ],
             initialize: function() {
 
                 // Base url for APIs
-                window.BASE_URL = "http://staging.wormbase.org";
+                window.BASE_URL = "http://dev.wormbase.org";
 
                 // Instantiates a new App View
                 this.appView = new AppView();
@@ -29,6 +29,8 @@ define([ "jquery","backbone", "../views/AppView" ],
                 "":                                          "home",
 
                 "home":                                      "home",
+
+                "recents":                                   "recents",
 
                 "search":                                    "gotoSearchPage",
 
@@ -59,6 +61,11 @@ define([ "jquery","backbone", "../views/AppView" ],
             search: function(className, query) {
 
                 this.appView.search(className.toLowerCase(), query);
+            },
+
+            recents: function() {
+
+                this.appView.recents();
             },
 
             object: function(className, id) {

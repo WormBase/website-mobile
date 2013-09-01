@@ -1,3 +1,167 @@
+/* 
+====================================
+    CUSTOM
+====================================
+*/ 
+
+#home-content {
+    background-image: url(../images/home-fade.jpg);
+    background-size: contain;
+    background-position-x: -20em;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#home-content h1 {
+    margin-top: 1em; 
+    font-size: 2.5em;
+}
+
+
+#home-content p {
+    margin: -0.8em 0 0 -0.4em; 
+    font-size: 1.5em;
+}
+
+/*
+====================================
+    JQM 
+====================================
+*/
+
+.ui-collapsible-content
+{
+    overflow: hidden;
+}
+
+.ui-table-columntoggle-btn
+{
+    display: none;
+}
+
+@media only all {
+
+    .ui-table-reflow td .ui-table-cell-label, .ui-table-reflow th .ui-table-cell-label 
+    {
+        min-width: 0;
+    }
+}
+
+
+@media ( min-width:35em ) {
+
+    /* wrap on wide viewports once open */
+    
+    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-left,
+    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-left,
+    .ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-left,
+    .ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-left {
+      margin-right: 17em;
+    }
+    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-right,
+    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-right,
+    .ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
+    .ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+      margin-left: 17em;
+    }
+    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push,
+    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal {
+      width: auto;
+    }
+    
+    /* disable "dismiss" on wide viewports */
+    .ui-panel-dismiss {
+      display: none;
+    }
+    /* same as the above but for panels with display mode "push" only */
+    .ui-panel-dismiss-display-push {
+      display: none;
+    }
+
+}
+
+/*
+====================================
+    TOOLTIP
+====================================
+*/
+
+[rel~=tooltip]
+{
+    border-bottom: 1px dotted #111;
+    cursor: help;
+}
+
+#tooltip
+{
+    font-family: Ubuntu, sans-serif;
+    font-size: 0.875em;
+    text-align: center;
+    text-shadow: 0 1px rgba( 0, 0, 0, .5 );
+    line-height: 1.5;
+    color: #fff;
+    background: #333;
+    background: -webkit-gradient( linear, left top, left bottom, from( rgba( 0, 0, 0, .6 ) ), to( rgba( 0, 0, 0, .8 ) ) );
+    background: -webkit-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: -moz-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: -ms-radial-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: -o-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-top: 1px solid #fff;
+    -webkit-box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
+    -moz-box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
+    box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
+    position: absolute;
+    z-index: 10000;
+    padding: 15px;
+}
+
+    #tooltip:after
+    {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+     border-right: 10px solid transparent;
+        border-top: 10px solid #333;
+        border-top-color: rgba( 0, 0, 0, .7 );
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        margin-left: -10px;
+    }
+
+        #tooltip.top:after
+        {
+            border-top-color: transparent;
+            border-bottom: 10px solid #333;
+            border-bottom-color: rgba( 0, 0, 0, .6 );
+            top: -20px;
+            bottom: auto;
+        }
+
+        #tooltip.left:after
+        {
+            left: 10px;
+            margin: 0;
+        }
+
+        #tooltip.right:after
+        {
+            right: 10px;
+            left: auto;
+            margin: 0;
+        }
+
 /*
 =====================================
     WIDGETS
@@ -687,137 +851,3 @@ table {
         table-layout: auto;
     }
 }
-
-/*
-====================================
-    JQM 
-====================================
-*/
-
-.ui-collapsible-content
-{
-    overflow: hidden;
-}
-
-.ui-table-columntoggle-btn
-{
-    display: none;
-}
-
-@media only all {
-
-    .ui-table-reflow td .ui-table-cell-label, .ui-table-reflow th .ui-table-cell-label 
-    {
-        min-width: 0;
-    }
-}
-
-
-@media ( min-width:35em ) {
-
-    /* wrap on wide viewports once open */
-    
-    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-left,
-    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-left,
-    .ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-left,
-    .ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-left {
-      margin-right: 17em;
-    }
-    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-right,
-    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-right,
-    .ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
-    .ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
-      margin-left: 17em;
-    }
-    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push,
-    .ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal {
-      width: auto;
-    }
-    
-    /* disable "dismiss" on wide viewports */
-    .ui-panel-dismiss {
-      display: none;
-    }
-    /* same as the above but for panels with display mode "push" only */
-    .ui-panel-dismiss-display-push {
-      display: none;
-    }
-
-}
-
-/*
-====================================
-    TOOLTIP
-====================================
-*/
-
-[rel~=tooltip]
-{
-    border-bottom: 1px dotted #111;
-    cursor: help;
-}
-
-#tooltip
-{
-    font-family: Ubuntu, sans-serif;
-    font-size: 0.875em;
-    text-align: center;
-    text-shadow: 0 1px rgba( 0, 0, 0, .5 );
-    line-height: 1.5;
-    color: #fff;
-    background: #333;
-    background: -webkit-gradient( linear, left top, left bottom, from( rgba( 0, 0, 0, .6 ) ), to( rgba( 0, 0, 0, .8 ) ) );
-    background: -webkit-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
-    background: -moz-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
-    background: -ms-radial-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
-    background: -o-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
-    background: linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border-top: 1px solid #fff;
-    -webkit-box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
-    -moz-box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
-    box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
-    position: absolute;
-    z-index: 10000;
-    padding: 15px;
-}
-
-    #tooltip:after
-    {
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-     border-right: 10px solid transparent;
-        border-top: 10px solid #333;
-        border-top-color: rgba( 0, 0, 0, .7 );
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: -10px;
-        margin-left: -10px;
-    }
-
-        #tooltip.top:after
-        {
-            border-top-color: transparent;
-            border-bottom: 10px solid #333;
-            border-bottom-color: rgba( 0, 0, 0, .6 );
-            top: -20px;
-            bottom: auto;
-        }
-
-        #tooltip.left:after
-        {
-            left: 10px;
-            margin: 0;
-        }
-
-        #tooltip.right:after
-        {
-            right: 10px;
-            left: auto;
-            margin: 0;
-        }
-

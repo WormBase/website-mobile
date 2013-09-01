@@ -9,9 +9,10 @@ define([ "jquery",
          "views/ObjectView", 
          "views/BrowseResourcesView",
          "views/BrowseSpeciesView",
-         "views/FilteredSearchView" ],
+         "views/FilteredSearchView",
+         "views/RecentsView" ],
 
-    function( $, Backbone, HomeView, SearchPageView, ObjectView, BrowseResourcesView, BrowseSpeciesView, FilteredSearchView ) {
+    function( $, Backbone, HomeView, SearchPageView, ObjectView, BrowseResourcesView, BrowseSpeciesView, FilteredSearchView, RecentsView ) {
 
         var AppView = Backbone.View.extend( {
 
@@ -23,12 +24,6 @@ define([ "jquery",
 
                 this.homeView = new HomeView();
                 this.homeView.parent = this;
-
-                this.browseSpeciesView = new BrowseSpeciesView();
-                this.browseSpeciesView.parent = this;
-
-                this.browseResourcesView = new BrowseResourcesView();
-                this.browseResourcesView.parent = this;
 
                 this.filteredView = new FilteredSearchView();
                 this.filteredView.parent = this;
@@ -84,6 +79,11 @@ define([ "jquery",
 
             browseResources: function(type, query) {
 
+                if (this.browseResourcesView == undefined) {
+                    this.browseResourcesView = new BrowseResourcesView();
+                    this.browseResourcesView.parent = this;
+                }
+
                 $.mobile.loader('show');
 
                 if ( type == null )
@@ -95,6 +95,11 @@ define([ "jquery",
             },
 
             browseSpecies: function(genus, specie, className, query) {
+
+                if (this.browseSpeciesView == undefined) {
+                    this.browseSpeciesView = new BrowseSpeciesView();
+                    this.browseSpeciesView.parent = this;
+                }
 
                 $.mobile.loader('show');
 
@@ -108,6 +113,16 @@ define([ "jquery",
                     this.filteredView.newSearch( className, specie, '*' );
                 else 
                     this.filteredView.newSearch( className, specie, query);
+            },
+
+            recents: function() {
+
+                if (this.recentsView == undefined) {
+                    this.recentsView = new RecentsView();
+                    this.recentsView.parent = this;
+                }
+
+                $.mobile.changePage(this.recentsView.$el.selector, { reverse: false, changeHash: false } );
             },
         } );
 
