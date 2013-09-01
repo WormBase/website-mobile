@@ -21,7 +21,7 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
             parse: function(response) {
 
                 // Extract list of default widgets
-                var defaultWidgets = [];
+                var defaultWidgets = ['overview'];
                 for (var widgetName in response.data.default_widgets)
                     defaultWidgets.push(widgetName);
 
