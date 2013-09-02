@@ -97,9 +97,18 @@ define([ "jquery",
             // renders options on the panel and placeholders on the areaview
             render: function() {
 
-                // put title in header
-                this.$el.find('div[data-role=header] h1').html( this.model.get('fields').name.data.label );
+                // put title in info box
+                var data = this.model.get('fields').name.data;
+                var boxContent = "";
 
+                if (data.taxonomy != "all")
+                    boxContent += data.taxonomy + " » ";
+
+                boxContent += data.class + " » " + data.label;
+
+                this.$el.find('#info-box').html( boxContent );
+
+                // render widgets panel and area
                 this.panelView.render();
                 this.areaView.render();
 

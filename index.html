@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
     <title>WormBase</title>
 
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
@@ -34,10 +32,7 @@
           <p>facilitating insights into <br /> nematode biology<br /></p>
           <a href="#recents" data-role="button" data-inline="true" data-theme="d">Recents</a>
           <a href="#search" data-role="button" data-inline="true" data-theme="b">Search</a>
-        </div>  
-        <!--
-        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter recents..." ></ul>
-        -->
+        </div> 
       </div>
     </div>
     <!--END home-page -->
@@ -69,12 +64,11 @@
           <input type="search" name="search" data-mini="true" value=""/>
           <div data-role="fieldcontain" style="display:inline" data-mini="true">
             <select name="search-classes" id="search-dropdown" data-theme="a">
-              <!-- options here -->
+              <!-- options here --> 
             </select>
           </div>
         </div>
       </div>
-
       <div data-role="content">
         <ul data-role="listview" id="search-result-list">
           
@@ -98,8 +92,13 @@
         <h1 class="ui-title">WormBase</h1>
         <button id="openWidgetsPanelButton" data-icon="grid" data-iconpos="false" >Widgets</button>
       </div>     
-      <div data-role="content" id="widgets-area">
-        <!-- widgets here -->
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-theme="e">
+          <li id="info-box"></li>
+        </ul>
+        <div id="widgets-area">
+          <!-- widgets here -->
+        </div>
       </div>
 
     </div>
@@ -128,8 +127,6 @@
           data-icon="bars" data-mini="true" data-iconpos="notext">Menu</a>
         <div style="margin-left:40px" >
           <input type="search" name="search" data-mini="true" value="" id="filter-search" />
-          <div data-role="fieldcontain" style="display:inline" data-mini="true">
-        </div>
         </div>
       </div>
       <div data-role="content">

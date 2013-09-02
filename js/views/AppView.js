@@ -20,7 +20,7 @@ define([ "jquery",
 
             initialize: function() {
 
-                var self = this;
+                $.mobile.loader('show');
 
                 this.homeView = new HomeView();
                 this.homeView.parent = this;
@@ -38,7 +38,7 @@ define([ "jquery",
                     success: function() {
 
                         $.mobile.loader('hide');
-                        $.mobile.changePage( self.browseSpeciesView.$el.selector, { changeHash: false, allowSamePageTransition: true } );
+                        $.mobile.changePage( "#browsing-page", { changeHash: false, reverse: false } );
                     },
 
                     error: function() {
@@ -70,7 +70,7 @@ define([ "jquery",
 
                     this.objectView = new ObjectView();
                     this.objectView.parent = this;
-                }
+                } 
 
                 this.objectView.model.set( {className: className, id: id} );
 
@@ -83,8 +83,6 @@ define([ "jquery",
                     this.browseResourcesView = new BrowseResourcesView();
                     this.browseResourcesView.parent = this;
                 }
-
-                $.mobile.loader('show');
 
                 if ( type == null )
                     this.browseResourcesView.collection.fetch( this.options );
@@ -100,8 +98,6 @@ define([ "jquery",
                     this.browseSpeciesView = new BrowseSpeciesView();
                     this.browseSpeciesView.parent = this;
                 }
-
-                $.mobile.loader('show');
 
                 if ( genus == null )
                     this.browseSpeciesView.fetchGenusList( this.options );

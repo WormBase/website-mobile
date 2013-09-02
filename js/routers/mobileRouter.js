@@ -13,7 +13,7 @@ define([ "jquery","backbone", "../views/AppView" ],
             initialize: function() {
 
                 // Base url for APIs
-                window.BASE_URL = "http://dev.wormbase.org";
+                window.BASE_URL = "http://staging.wormbase.org";
 
                 // Instantiates a new App View
                 this.appView = new AppView();
