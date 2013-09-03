@@ -12,6 +12,8 @@ require.config( {
           "text":           "libs/text",
           "fetchcache":     "libs/backbone.fetch-cache",
           "pluralize":      "libs/pluralize",
+          "spin":           "libs/spin.min",
+          "jquerySpin":     "libs/jquery.spin",
       },
 
       // Sets the configuration for third party scripts that are not AMD compatible

@@ -5,7 +5,9 @@
 define([ "jquery", 
          "backbone", 
          "text!../../templates/app/widget-placeholder.html", 
-         "text!../../templates/app/widget-container.html" ], 
+         "text!../../templates/app/widget-container.html",
+         "spin", 
+         "jquerySpin" ], 
 
     function( $, Backbone, WidgetPlaceholderTemplate, WidgetContainerTemplate ) {
 
@@ -18,27 +20,43 @@ define([ "jquery",
 
                 this.model.on("change:visible", this.toggleVisibility, this);
 
+                this.spinnerOpts = {
+                    lines: 13, // The number of lines to draw
+                    length: 20, // The length of each line
+                    width: 10, // The line thickness
+                    radius: 30, // The radius of the inner circle
+                    corners: 1, // Corner roundness (0..1)
+                    rotate: 0, // The rotation offset
+                    direction: 1, // 1: clockwise, -1: counterclockwise
+                    color: '#000', // #rgb or #rrggbb or array of colors
+                    speed: 1, // Rounds per second
+                    trail: 60, // Afterglow percentage
+                    shadow: false, // Whether to render a shadow
+                    hwaccel: false, // Whether to use hardware acceleration
+                    className: 'spinner', // The CSS class to assign to the spinner
+                    zIndex: 2e9, // The z-index (defaults to 2000000000)
+                    top: 'auto', // Top position relative to parent in px
+                    left: 'auto' // Left position relative to parent in px
+                };
             },
 
             // Renders the placeholder for this widget
             render: function() {
 
-                var self = this;
-
                 // render the template
-                template = _.template( WidgetPlaceholderTemplate, { "widget": self.model } );
+                template = _.template( WidgetPlaceholderTemplate, { "widget": this.model } );
 
                 // append/prepend list item to the parent view
-                if (self.model.get('widgetName') == "overview") 
-                    self.parent.$el.prepend(template);
+                if (this.model.get('widgetName') == "overview") 
+                    this.parent.$el.prepend(template);
                 else 
-                    self.parent.$el.append(template);
+                    this.parent.$el.append(template);
 
                 // now that a placeholder has been placed, assign this view to that placeholder
-                self.setElement( "#" + self.model.get('widgetName') );
+                this.setElement( "#" + this.model.get('widgetName') );
 
                 // Bind event to open popups after a click on a button
-                self.$el.on('vclick', 'button', function() {
+                this.$el.on('vclick', 'button', function() {
 
                     $("#" + this.id + "Popup").popup('open');
                 } );
@@ -129,12 +147,15 @@ define([ "jquery",
                 var self = this;
 
                 // create the boxes for the widgets
-                template = _.template(WidgetContainerTemplate, { "widget": self.model } );
-                self.$el.append(template).trigger('create');
+                template = _.template(WidgetContainerTemplate, { "widget": this.model } );
+                this.$el.append(template).trigger('create');
 
+                var widgetBox = this.$el.find('.ui-collapsible-content');
+                
+                widgetBox.spin();
 
                 // look for the template file for this widget
-                require( ["text!../templates/classes/" + self.model.collection.parent.get('className') + "/" + self.model.get('widgetName') + ".html"], 
+                require( ["text!../templates/classes/" + this.model.collection.parent.get('className') + "/" + this.model.get('widgetName') + ".html"], 
                     
                     // on SUCCESS, fetch JSON and render the template
                     function(widgetTemplate) {
@@ -147,24 +168,23 @@ define([ "jquery",
 
                         self.model.fetch( {
 
-                            success:    function() {
+                            success: function() {
 
                                 if (self.model.get('widgetName') == "overview")
                                     $('#object-page div[data-role=header] h1')[0].innerHTML = self.model.get('fields').name.data.label;
                                 
                                 widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
-                                self.$el.find('.ui-collapsible-content').append(widgetContent).trigger('create');
-
+                                widgetBox.append(widgetContent).trigger('create');
                             },
 
-                            error:      function() {
+                            error: function() {
                                 widgetContent = "<p>Error while retrieving widget from the server</p>";
-                                self.$el.find('.ui-collapsible-content').append(widgetContent);
+                                widgetBox.append(widgetContent);
                             },
                         } );
 
                         widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
-                        self.$el.find('.ui-collapsible-content').append(widgetContent).trigger('create');
+                        widgetBox.append(widgetContent).trigger('create');
                     },
 
                     // on ERROR, fetch the HTML template from the server
@@ -184,7 +204,7 @@ define([ "jquery",
 
                                 processedHtml = self.processWidget( html );
 
-                                self.$el.find('.ui-collapsible-content').html( processedHtml ).trigger('create');
+                                widgetBox.html( processedHtml ).trigger('create');
 
                                 //self.processWidget();
                             },
@@ -192,7 +212,7 @@ define([ "jquery",
                             // on error, put an error in the widget box
                             error:      function() {
                                 widgetContent = "<p>Error while retrieving widget from the server</p>";
-                                self.$el.find('.ui-collapsible-content').append(widgetContent);
+                                widgetBox.append(widgetContent);
                             },
                         } );
                     }

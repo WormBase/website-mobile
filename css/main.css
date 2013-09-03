@@ -29,6 +29,11 @@
     font-size: 1.5em;
 }
 
+.spinner {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
 /*
 ====================================
     JQM 
@@ -297,6 +302,7 @@ div.detail-box{
   max-width:25em;
 /*   min-width:19em; */
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 div.description {
