@@ -21,7 +21,11 @@ define([ "jquery",
             render: function() {
 
                 // Render side app menu
-                this.$el.append( _.template(AppMenuTemplate, {} ) );
+                var $panel = this.$el.find('#menu-panel');
+                $panel.html(_.template(AppMenuTemplate));
+
+                if ( $panel.hasClass('ui-panel') )
+                    $panel.trigger('create');
 
                 // Populate the home screen with recents list
                 var $ul = this.$el.find('div[data-role=content] ul');

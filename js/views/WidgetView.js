@@ -205,8 +205,6 @@ define([ "jquery",
                                 processedHtml = self.processWidget( html );
 
                                 widgetBox.html( processedHtml ).trigger('create');
-
-                                //self.processWidget();
                             },
 
                             // on error, put an error in the widget box
@@ -415,7 +413,6 @@ define([ "jquery",
                 $dom.find('div').filter( function() {
                     return this.style.whiteSpace == 'nowrap'
                 } ).css('white-space', '');
-
 
                 return $dom.html();
             },

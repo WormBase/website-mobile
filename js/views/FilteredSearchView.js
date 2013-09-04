@@ -20,10 +20,6 @@ define([ "jquery",
                 // Initialize the view for the search results list
                 this.searchResultsView = new SearchResultsView( { el: "#search-result-list" } );
                 this.searchResultsView.parent = this;
-
-                // Render side app menu
-                this.$el.append( _.template(AppMenuTemplate, {} ) );
-
             },
 
             // Defines the HTML element for this view
@@ -59,6 +55,13 @@ define([ "jquery",
             },
 
             newSearch: function(className, specie , query, options) {
+
+                // Render side app menu
+                var $panel = this.$el.find('#menu-panel');
+                $panel.html(_.template(AppMenuTemplate));
+
+                if ( $panel.hasClass('ui-panel') )
+                    $panel.trigger('create');
 
                 // Keep search form consistent
                 this.$el.find('input[name=search]').val(query);

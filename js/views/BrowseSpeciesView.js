@@ -16,11 +16,6 @@ define([ "jquery",
             // The View Constructor
             initialize: function() {
 
-                // Render side app menu
-                this.$el.append( _.template( AppMenuTemplate, {} ) );
-
-                var self = this;
-
                 this.collection = new SpeciesCollection();
                 this.collection.parent = this;
 
@@ -95,6 +90,14 @@ define([ "jquery",
 
             render: function() {
 
+                // Render side app menu
+                var $panel = this.$el.find('#menu-panel');
+                $panel.html(_.template(AppMenuTemplate));
+
+                if ( $panel.hasClass('ui-panel') )
+                    $panel.trigger('create');
+
+                // Render species list
                 var $ul = this.$el.find('div[data-role=content] ul');
 
                 $ul.empty();
