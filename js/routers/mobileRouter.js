@@ -30,7 +30,7 @@ define([ "jquery","backbone", "../views/AppView" ],
 
                 "home":                                      "home",
 
-                "recents":                                   "recents",
+                "history":                                   "history",
 
                 "search":                                    "gotoSearchPage",
 
@@ -63,9 +63,9 @@ define([ "jquery","backbone", "../views/AppView" ],
                 this.appView.search(className.toLowerCase(), query);
             },
 
-            recents: function() {
+            history: function() {
 
-                this.appView.recents();
+                this.appView.history();
             },
 
             object: function(className, id) {

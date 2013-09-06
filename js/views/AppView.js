@@ -10,9 +10,9 @@ define([ "jquery",
          "views/BrowseResourcesView",
          "views/BrowseSpeciesView",
          "views/FilteredSearchView",
-         "views/RecentsView" ],
+         "views/HistoryView" ],
 
-    function( $, Backbone, HomeView, SearchPageView, ObjectView, BrowseResourcesView, BrowseSpeciesView, FilteredSearchView, RecentsView ) {
+    function( $, Backbone, HomeView, SearchPageView, ObjectView, BrowseResourcesView, BrowseSpeciesView, FilteredSearchView, HistoryView ) {
 
         var AppView = Backbone.View.extend( {
 
@@ -111,14 +111,14 @@ define([ "jquery",
                     this.filteredView.newSearch( className, specie, query);
             },
 
-            recents: function() {
+            history: function() {
 
-                if (this.recentsView == undefined) {
-                    this.recentsView = new RecentsView();
-                    this.recentsView.parent = this;
+                if (this.historyView == undefined) {
+                    this.historyView = new HistoryView();
+                    this.historyView.parent = this;
                 }
 
-                $.mobile.changePage(this.recentsView.$el.selector, { reverse: false, changeHash: false } );
+                $.mobile.changePage(this.historyView.$el.selector, { reverse: false, changeHash: false } );
             },
         } );
 

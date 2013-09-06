@@ -1,4 +1,4 @@
-// Recents View
+// History View
 // =========================
 
 // Includes file dependencies
@@ -9,9 +9,9 @@ define([ "jquery",
 
     function( $, Backbone, AppMenuTemplate, RecentElementItemTemplate ) {
 
-        var RecentsView = Backbone.View.extend( {
+        var HistoryView = Backbone.View.extend( {
 
-            el: "#recents-page", 
+            el: "#history-page", 
 
             initialize: function() {
 
@@ -27,7 +27,7 @@ define([ "jquery",
                 if ( $panel.hasClass('ui-panel') )
                     $panel.trigger('create');
 
-                // Populate the home screen with recents list
+                // Populate the home screen with recent list
                 var $ul = this.$el.find('div[data-role=content] ul');
 
                 $ul.empty();
@@ -72,6 +72,6 @@ define([ "jquery",
             },
         } );
 
-        return RecentsView;
+        return HistoryView;
     } 
 );
