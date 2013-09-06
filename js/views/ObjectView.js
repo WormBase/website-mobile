@@ -31,7 +31,7 @@ define([ "jquery",
                 this.model.widgets.on("reset", this.reset, this);
 
                 this.model.on("change:id", this.changeObject, this);
-
+/*
                 // Bind event to open the panel
                 this.$el.find('#openWidgetsPanelButton').on("vclick", function() {
                     self.panelView.$el.panel('toggle');
@@ -43,7 +43,7 @@ define([ "jquery",
                     self.$el.find('#menu-panel').panel('toggle');
                     self.panelView.$el.panel('close');
                 } );
-            },
+*/            },
 
             el: "#object-page",
 

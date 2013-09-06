@@ -60,7 +60,7 @@ define([ "jquery",
 
                     $("#" + this.id + "Popup").popup('open');
                 } );
-
+/*
                 this.parent.parent.$el.off().on('mouseenter', '[rel~=tooltip]', function() {
 
                     target  = $( this );
@@ -129,7 +129,7 @@ define([ "jquery",
                     target.on( 'mouseleave', remove_tooltip );
                     tooltip.on( 'click', remove_tooltip );
                 } );
-
+*/
                 // Maintains chainability
                 return this;
             },
@@ -148,7 +148,7 @@ define([ "jquery",
 
                 // create the boxes for the widgets
                 template = _.template(WidgetContainerTemplate, { "widget": this.model } );
-                this.$el.append(template).trigger('create');
+                this.$el.html(template).trigger('create');
 
                 var widgetBox = this.$el.find('.ui-collapsible-content');
                 
@@ -204,13 +204,15 @@ define([ "jquery",
 
                                 processedHtml = self.processWidget( html );
 
-                                widgetBox.html( processedHtml ).trigger('create');
+                                widgetBox.spin(false).html( processedHtml ).trigger('create');
                             },
 
                             // on error, put an error in the widget box
                             error:      function() {
+
                                 widgetContent = "<p>Error while retrieving widget from the server</p>";
-                                widgetBox.append(widgetContent);
+
+                                widgetBox.spin(false).html(widgetContent);
                             },
                         } );
                     }
@@ -221,7 +223,6 @@ define([ "jquery",
 
                 this.$el.children("div").remove();
             },
-
 
             processWidget: function(html) {
 
