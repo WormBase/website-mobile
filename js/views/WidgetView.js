@@ -60,8 +60,9 @@ define([ "jquery",
 
                     $("#" + this.id + "Popup").popup('open');
                 } );
-/*
-                this.parent.parent.$el.off().on('mouseenter', '[rel~=tooltip]', function() {
+
+                this.parent.parent.$el.off('mouseenter', "[rel~=tooltip]")
+                                      .on('mouseenter', '[rel~=tooltip]', function() {
 
                     target  = $( this );
                     tip     = target.attr( 'title' );
@@ -69,7 +70,7 @@ define([ "jquery",
              
                     if( !tip || tip == '' )
                         return false;
-             
+
                     target.removeAttr( 'title' );
                     tooltip.css( 'opacity', 0 )
                            .html( tip )
@@ -128,8 +129,9 @@ define([ "jquery",
              
                     target.on( 'mouseleave', remove_tooltip );
                     tooltip.on( 'click', remove_tooltip );
+
                 } );
-*/
+
                 // Maintains chainability
                 return this;
             },
