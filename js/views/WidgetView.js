@@ -156,68 +156,75 @@ define([ "jquery",
                 
                 widgetBox.spin();
 
+                var onErr = function(err) {
+
+                    self.model.fetch( {
+
+                        cache: true,
+                        expires: false,
+
+                        dataType:   "html",
+
+                        // on success, put the html in the widget box
+                        success:    function() {
+
+                            html = self.model.get('html');
+
+                            processedHtml = self.processWidget( html );
+
+                            widgetBox.spin(false).html( processedHtml ).trigger('create');
+                        },
+
+                        // on error, put an error in the widget box
+                        error:      function() {
+
+                            widgetContent = "<p>Error while retrieving widget from the server</p>";
+
+                            widgetBox.spin(false).html(widgetContent);
+                        },
+                    } );
+                }
+
                 // look for the template file for this widget
                 require( ["text!../templates/classes/" + this.model.collection.parent.get('className') + "/" + this.model.get('widgetName') + ".html"], 
                     
                     // on SUCCESS, fetch JSON and render the template
                     function(widgetTemplate) {
 
-                        // could be done better 
-                        url = self.model.url.split("=");
-                        url[1] = "application/json";
-                        self.model.url = url.join("=");
-                        self.model.parse = function(response) {return response};
+                        if (widgetTemplate != "") {
+                            // could be done better 
+                            url = self.model.url.split("=");
+                            url[1] = "application/json";
+                            self.model.url = url.join("=");
+                            self.model.parse = function(response) {return response};
 
-                        self.model.fetch( {
+                            self.model.fetch( {
 
-                            success: function() {
+                                success: function() {
 
-                                if (self.model.get('widgetName') == "overview")
-                                    $('#object-page div[data-role=header] h1')[0].innerHTML = self.model.get('fields').name.data.label;
-                                
-                                widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
-                                widgetBox.append(widgetContent).trigger('create');
-                            },
+                                    if (self.model.get('widgetName') == "overview")
+                                        $('#object-page div[data-role=header] h1')[0].innerHTML = self.model.get('fields').name.data.label;
+                                    
+                                    widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
+                                    widgetBox.append(widgetContent).trigger('create');
+                                },
 
-                            error: function() {
-                                widgetContent = "<p>Error while retrieving widget from the server</p>";
-                                widgetBox.append(widgetContent);
-                            },
-                        } );
+                                error: function() {
+                                    widgetContent = "<p>Error while retrieving widget from the server</p>";
+                                    widgetBox.append(widgetContent);
+                                },
+                            } );
 
-                        widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
-                        widgetBox.append(widgetContent).trigger('create');
+                            widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
+                            widgetBox.append(widgetContent).trigger('create');
+                        }
+                        else
+                            onErr();
                     },
 
                     // on ERROR, fetch the HTML template from the server
-                    function(err) { 
+                    onErr
 
-                        self.model.fetch( {
-
-                            cache: true,
-                            expires: false,
-
-                            dataType:   "html",
-
-                            // on success, put the html in the widget box
-                            success:    function() {
-
-                                html = self.model.get('html');
-
-                                processedHtml = self.processWidget( html );
-
-                                widgetBox.spin(false).html( processedHtml ).trigger('create');
-                            },
-
-                            // on error, put an error in the widget box
-                            error:      function() {
-
-                                widgetContent = "<p>Error while retrieving widget from the server</p>";
-
-                                widgetBox.spin(false).html(widgetContent);
-                            },
-                        } );
-                    }
                 );
             },
 
