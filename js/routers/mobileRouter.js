@@ -15,6 +15,8 @@ define([ "jquery","backbone", "../views/AppView" ],
                 // Base url for APIs
                 window.BASE_URL = "http://staging.wormbase.org";
 
+                window.WEBSITE_URL = "http://www.wormbase.org";
+
                 // Instantiates a new App View
                 this.appView = new AppView();
                 this.appView.parent = this;
