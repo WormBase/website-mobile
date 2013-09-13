@@ -31,19 +31,15 @@ define([ "jquery",
                 this.model.widgets.on("reset", this.reset, this);
 
                 this.model.on("change:id", this.changeObject, this);
-/*
-                // Bind event to open the panel
-                this.$el.find('#openWidgetsPanelButton').on("vclick", function() {
-                    self.panelView.$el.panel('toggle');
-                    self.$el.find('#menu-panel').panel('close');
-                } );                
 
-                // Bind event to open the panel
-                this.$el.find('#openAppMenuButton').on("vclick", function() {
-                    self.$el.find('#menu-panel').panel('toggle');
+                this.$el.on('swipeleft', function() { 
+                    self.panelView.$el.panel('open');
+                } );
+                this.$el.on('swiperight', function() {
                     self.panelView.$el.panel('close');
                 } );
-*/            },
+                
+            },
 
             el: "#object-page",
 

@@ -45,6 +45,14 @@ define([ "jquery",
                         alert('error');
                     },
                 };
+
+                // Menu panel swipe to open
+                this.$el.on('swiperight', function(event) {
+                    $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('open');
+                } );
+                this.$el.on('swipeleft', function() { 
+                    $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('close');
+                } );
             },
 
             // calling this method without arguments will bring the user to the search page
