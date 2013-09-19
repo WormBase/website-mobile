@@ -37,7 +37,7 @@ define([ "jquery",
                 this.setElement( "#" + this.model.get('widgetName') );
 
                 // Bind event to open popups after a click on a button
-                this.$el.on('vclick', 'button', function() {
+                this.$el.on('vmouseup', 'button', function() {
 
                     $("#" + this.id + "Popup").popup('open');
                 } );
@@ -101,7 +101,7 @@ define([ "jquery",
 
                 // look for the template file for this widget
                 require( ["text!../templates/classes/" + this.model.collection.parent.get('className') + "/" + this.model.get('widgetName') + ".html"], 
-                    
+
                     // on SUCCESS, fetch JSON and render the template
                     function(widgetTemplate) {
 
@@ -202,7 +202,7 @@ define([ "jquery",
                 $dom.find('.toggle').next().css('display', 'none');
                 $dom.find('.toggle span').addClass('ui-icon-arrow-r')
                 // Bind .toggle to display .returned
-                this.$el.on('vclick', '.toggle', function() {
+                this.$el.on('vmouseup', '.toggle', function() {
                     
                     // Assuming next element is always the .returned
                     $(this).next().toggle();
@@ -220,7 +220,7 @@ define([ "jquery",
                     
                     $(this).find('.ui-icon').addClass('ui-icon-arrow-d');
                 } );
-                this.$el.on('vclick', '.ev-more', function() {
+                this.$el.on('vmouseup', '.ev-more', function() {
                     
                     $(this).prev().toggle();
 
@@ -248,7 +248,7 @@ define([ "jquery",
                                       .toggle();
 
                         // bind click event
-                        self.$el.on('vclick', '#'+randId, function() {
+                        self.$el.on('vmouseup', '#'+randId, function() {
                             $('#'+randId+'Popup').popup('open');
                         });
                     }
@@ -263,7 +263,7 @@ define([ "jquery",
                     $(this).wrapInner('<div class="text-min-expand" />')
                            .append('<div class="more"> <div class="ui-icon ui-icon-arrow-d" style="margin-top: 0.2em"> </div> </div>');
                 } );
-                this.$el.on('vclick', '.more', function() {
+                this.$el.on('vmouseup', '.more', function() {
 
                     $(this).prev().toggleClass("text-min-expand");
 

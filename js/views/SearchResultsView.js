@@ -48,7 +48,7 @@ define([ "jquery",
             // Bind DOM events
             events: {
 
-                "vclick #load-more": "loadMore"
+                "vmouseup #load-more": "loadMore"
             },
 
             // Load and display the next page of results

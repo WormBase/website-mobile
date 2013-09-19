@@ -48,7 +48,7 @@ define([ "jquery", "backbone"],
 
                         ul.trigger('create').listview('refresh');
 
-                        ul.find('li label').on("vclick", function() {
+                        ul.find('li label').on("vmouseup", function() {
 
                             var widgetName = $(this)[0].id.split('-')[0];
 
