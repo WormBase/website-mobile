@@ -43,6 +43,8 @@ define([ "jquery","backbone", "../views/AppView" ],
 
                 "species(/:genus)(/:specie)(/:className)(/:query)(/)":   "species",
 
+                "about":                                     "about",
+
             },
 
             // Home method
@@ -82,6 +84,10 @@ define([ "jquery","backbone", "../views/AppView" ],
             species: function(genus, specie, className, query) {
 
                 WBMobile.views.appView.browseSpecies(genus, specie, className, query);
+            },
+
+            about: function() {
+                WBMobile.views.appView.about();
             },
         } );
 

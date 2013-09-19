@@ -10,9 +10,19 @@ define([ "jquery",
          "views/BrowseResourcesView",
          "views/BrowseSpeciesView",
          "views/FilteredSearchView",
-         "views/HistoryView" ],
+         "views/HistoryView",
+         "views/AboutView" ],
 
-    function( $, Backbone, HomeView, SearchPageView, ObjectView, BrowseResourcesView, BrowseSpeciesView, FilteredSearchView, HistoryView ) {
+    function( $, 
+              Backbone, 
+              HomeView, 
+              SearchPageView, 
+              ObjectView, 
+              BrowseResourcesView, 
+              BrowseSpeciesView, 
+              FilteredSearchView, 
+              HistoryView, 
+              AboutView ) {
 
         var AppView = Backbone.View.extend( {
 
@@ -113,6 +123,13 @@ define([ "jquery",
                 WBMobile.views.history = WBMobile.views.history || new HistoryView();
 
                 $.mobile.changePage( WBMobile.views.history.$el.selector, { reverse: false, changeHash: false } );
+            },
+
+            about: function() {
+
+                WBMobile.views.about = WBMobile.views.about || new AboutView();
+
+                $.mobile.changePage( WBMobile.views.about.$el.selector, { changeHash: false })
             },
         } );
 
