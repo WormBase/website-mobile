@@ -12,7 +12,7 @@ define( [ "jquery", "backbone" ], function( $, Backbone) {
             this.set( { name: this.get('id') } );
 
             // Define the URL representing this widget on the server (this.url is used by the 'fetch' method)
-            this.url = window.BASE_URL + '/rest/widget/' 
+            this.url = WBMobile.defaults.BASE_URL + '/rest/widget/' 
                       + this.collection.parent.get('className') + '/' 
                       + this.collection.parent.get('id') + '/' 
                       + this.get('widgetName') + '?content-type=text/html';

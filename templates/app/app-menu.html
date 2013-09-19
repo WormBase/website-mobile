@@ -1,4 +1,4 @@
-    <%
+<%
     var $ul = $( document.createElement('ul') );
         
     $ul.attr('data-role', 'listview')
@@ -11,7 +11,7 @@
         + '<li data-icon="false"><a href="#species">Browse Species</a></li>'
         + '<li data-icon="false"><a href="#resources">Browse Resources</a></li>'
         + '<li data-icon="false"><a href="#about">About</a></li>'
-        + '<li data-icon="false"><a href="'+ window.WEBSITE_URL +'" target="_system">Go to desktop website</a></li>'
+        + '<li data-icon="false"><a href="'+ WBMobile.defaults.WEBSITE_URL +'" target="_system">Go to desktop website</a></li>'
     ); 
 
     var route = window.location.hash.split('/')[0];
@@ -22,6 +22,6 @@
             if ( route == $(this).find('a').first().attr('href') )
                 $(this).attr('data-theme', 'b');
         } );
-    %>
+%>
 
-    <%= $ul.wrapAll('<div />').parent().html() %>
+<%= $ul.wrapAll('<div />').parent().html() %>

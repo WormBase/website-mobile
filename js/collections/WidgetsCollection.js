@@ -12,7 +12,7 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
 
             url: function() {
 
-                return window.BASE_URL + "/rest/config?class=" 
+                return WBMobile.defaults.BASE_URL + "/rest/config?class=" 
                                        + this.parent.get('className')
                                        + "&content-type=application/json";
             },

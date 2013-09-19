@@ -18,8 +18,7 @@ define([ "jquery","backbone", "../views/AppView" ],
                 window.WEBSITE_URL = "http://www.wormbase.org";
 
                 // Instantiates a new App View
-                this.appView = new AppView();
-                this.appView.parent = this;
+                WBMobile.views.appView = new AppView();
 
                 // Tells Backbone to start watching for hashchange events
                 Backbone.history.start();
@@ -49,7 +48,7 @@ define([ "jquery","backbone", "../views/AppView" ],
             // Home method
             home: function() {
 
-                this.appView.render();
+                WBMobile.views.appView.home();
 
                 // Programatically changes to the home page
                 $.mobile.changePage( "#home-page" , { reverse: false, changeHash: false } );
@@ -57,32 +56,32 @@ define([ "jquery","backbone", "../views/AppView" ],
 
             gotoSearchPage: function() {
 
-                this.appView.search();
+                WBMobile.views.appView.search();
             },
 
             search: function(className, query) {
 
-                this.appView.search(className.toLowerCase(), query);
+                WBMobile.views.appView.search(className.toLowerCase(), query);
             },
 
             history: function() {
 
-                this.appView.history();
+                WBMobile.views.appView.history();
             },
 
             object: function(className, id) {
 
-                this.appView.gotoObject(className.toLowerCase(), id);
+                WBMobile.views.appView.gotoObject(className.toLowerCase(), id);
             },
 
             resources: function(type, query) {
 
-                this.appView.browseResources(type, query);
+                WBMobile.views.appView.browseResources(type, query);
             },
 
             species: function(genus, specie, className, query) {
 
-                this.appView.browseSpecies(genus, specie, className, query);
+                WBMobile.views.appView.browseSpecies(genus, specie, className, query);
             },
         } );
 

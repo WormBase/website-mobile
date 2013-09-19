@@ -24,7 +24,7 @@ define([ "jquery","backbone" ],
             // Define the URL for search
             url: function() {
 
-                return window.BASE_URL + "/rest/config/sections/resources?content-type=application/json"
+                return WBMobile.defaults.BASE_URL + "/rest/config/sections/resources?content-type=application/json"
             },
 
             // For caching purposes

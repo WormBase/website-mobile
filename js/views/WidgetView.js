@@ -476,7 +476,7 @@ define([ "jquery",
                         else {
 
                             // for all unsupported urls - open the desktop website
-                            this.href = this.href.replace( window.location.origin, window.WEBSITE_URL );   
+                            this.href = this.href.replace( window.location.origin, WBMobile.defaults.WEBSITE_URL );   
                             this.target = "_system"; 
                         }
                     }
@@ -491,7 +491,7 @@ define([ "jquery",
                 // Fix URLs for images
                 $dom.find('img').each( function() {
 
-                    this.src = this.src.replace( window.location.origin, window.WEBSITE_URL );
+                    this.src = this.src.replace( window.location.origin, WBMobile.defaults.WEBSITE_URL );
                 } );
 
                 return $dom;

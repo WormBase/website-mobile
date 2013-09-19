@@ -22,12 +22,6 @@ define([ "jquery",
 
                 $.mobile.loader('show');
 
-                this.homeView = new HomeView();
-                this.homeView.parent = this;
-
-                this.filteredView = new FilteredSearchView();
-                this.filteredView.parent = this;
-
                 this.options = {
 
                     cache: true,
@@ -55,78 +49,70 @@ define([ "jquery",
                 } );
             },
 
+            home: function() {
+
+                WBMobile.views.home = WBMobile.views.home || new HomeView();
+
+                $.mobile.changePage( WBMobile.views.home.$el.selector, { changeHash: false } );
+            },
+
             // calling this method without arguments will bring the user to the search page
             search: function(className, query) {
 
-                if (this.searchPageView == undefined) {
+                WBMobile.views.searchPage = WBMobile.views.searchPage || new SearchPageView();
 
-                    this.searchPageView = new SearchPageView(); 
-                    this.searchPageView.parent = this;
-                }
-
-                else if (className == undefined || query == undefined) 
-                    $.mobile.changePage(this.searchPageView.$el.selector, { reverse: false, changeHash: false } );
-
-                if (className != undefined && query != undefined)
-
-                    this.searchPageView.newSearch(className, query);
+                if (className == undefined || query == undefined) 
+                    $.mobile.changePage( WBMobile.views.searchPage.$el.selector, { reverse: false, changeHash: false } );
+                else 
+                    WBMobile.views.searchPage.newSearch(className, query);
             },
 
             gotoObject: function(className, id) {
 
-                if (this.objectView == undefined) {
+                WBMobile.views.object = WBMobile.views.object || new ObjectView();
 
-                    this.objectView = new ObjectView();
-                    this.objectView.parent = this;
-                } 
+                WBMobile.views.object.model.set( {className: className, id: id} );
 
-                this.objectView.model.set( {className: className, id: id} );
-
-                $.mobile.changePage(this.objectView.$el.selector, { reverse: false, changeHash: false } );
+                $.mobile.changePage( WBMobile.views.object.$el.selector, { reverse: false, changeHash: false } );
             },
 
             browseResources: function(type, query) {
 
-                if (this.browseResourcesView == undefined) {
-                    this.browseResourcesView = new BrowseResourcesView();
-                    this.browseResourcesView.parent = this;
-                }
+                WBMobile.views.filter = WBMobile.views.filter || new FilteredSearchView();
+
+                WBMobile.views.browseResources = WBMobile.views.browseResources || new BrowseResourcesView();
 
                 if ( type == null )
-                    this.browseResourcesView.collection.fetch( this.options );
+                    WBMobile.views.browseResources.collection.fetch( this.options );
                 else if ( query == null )
-                    this.filteredView.newSearch( type, 'all', '*');
+                    WBMobile.views.filter.newSearch( type, 'all', '*');
                 else 
-                    this.filteredView.newSearch( type, 'all', query);
+                    WBMobile.views.filter.newSearch( type, 'all', query);
             },
 
             browseSpecies: function(genus, specie, className, query) {
 
-                if (this.browseSpeciesView == undefined) {
-                    this.browseSpeciesView = new BrowseSpeciesView();
-                    this.browseSpeciesView.parent = this;
-                }
+                WBMobile.views.filter = WBMobile.views.filter || new FilteredSearchView();
+
+                WBMobile.views.browseSpecies = WBMobile.views.browseSpecies || new BrowseSpeciesView();
 
                 if ( genus == null )
-                    this.browseSpeciesView.fetchGenusList( this.options );
+                    WBMobile.views.browseSpecies.fetchGenusList( this.options );
                 else if ( specie == null )
-                    this.browseSpeciesView.fetchSpeciesList( genus, this.options );
+                    WBMobile.views.browseSpecies.fetchSpeciesList( genus, this.options );
                 else if ( className == null )
-                    this.browseSpeciesView.fetchAvailableClassesList( specie, this.options );
+                    WBMobile.views.browseSpecies.fetchAvailableClassesList( specie, this.options );
                 else if ( query == null )
-                    this.filteredView.newSearch( className, specie, '*' );
+                    WBMobile.views.filter.newSearch( className, specie, '*' );
                 else 
-                    this.filteredView.newSearch( className, specie, query);
+                    WBMobile.views.filter.newSearch( className, specie, query);
             },
 
             history: function() {
 
-                if (this.historyView == undefined) {
-                    this.historyView = new HistoryView();
-                    this.historyView.parent = this;
-                }
+                WBMobile.views.history = WBMobile.views.history || new HistoryView();
 
-                $.mobile.changePage(this.historyView.$el.selector, { reverse: false, changeHash: false } );
+                $.mobile.changePage( WBMobile.views.history.$el.selector, { reverse: false, changeHash: false } );
             },
         } );
 

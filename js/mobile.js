@@ -38,7 +38,7 @@ require.config( {
 } );
 
 // Includes File Dependencies
-require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache" ], function( $, Backbone, MobileRouter ) {
+require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache", "app" ], function( $, Backbone, MobileRouter ) {
 
     // Set up the "mobileinit" handler before requiring jQuery Mobile's module
     $( document ).on( "mobileinit", function() {
@@ -60,11 +60,6 @@ require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache" ], function
             $.mobile.phonegapNavigationEnabled = true;
 
         $.mobile.defaultPageTransition = "slide";
-/*
-        $.mobile.page.prototype.options.theme = "a";
-        $.mobile.page.prototype.options.contentTheme = "a";
-        $.mobile.panel.prototype.options.theme = "a";
-*/
     } );
 
     require( [ "jquerymobile" ], function() {
@@ -87,6 +82,6 @@ require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache" ], function
         };
 
         // Instantiates a new Backbone.js Mobile Router
-        this.router = new MobileRouter();
+        WBMobile.routers.mobile = new MobileRouter();
     } );
 } );

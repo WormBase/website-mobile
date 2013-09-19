@@ -19,7 +19,7 @@ define([ "jquery",
 
             url: function() {
 
-                return window.BASE_URL + '/rest/widget/' 
+                return WBMobile.defaults.BASE_URL + '/rest/widget/' 
                       + this.get('className') + '/' + this.get('id') 
                       + '/overview?content-type=application/json';
             },

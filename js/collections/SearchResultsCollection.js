@@ -35,7 +35,7 @@ define([ "jquery","backbone","models/SearchResultEntryModel" ],
             // Define the URL for search
             url: function() {
 
-                return  window.BASE_URL + "/search/" 
+                return  WBMobile.defaults.BASE_URL + "/search/" 
                         + this.className + "/" + this.query + "/" + this.page 
                         + "?species=" + this.species + "&content-type=application/json";
 
