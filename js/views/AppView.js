@@ -52,10 +52,14 @@ define([ "jquery",
 
                 // Menu panel swipe to open
                 this.$el.on('swiperight', function(event) {
-                    $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('open');
+                    if($.mobile.activePage.find('#widgets-panel').hasClass('ui-panel-closed')){
+                        $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('open');
+                    }
                 } );
                 this.$el.on('swipeleft', function() { 
-                    $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('close');
+                    if($.mobile.activePage.find('#widgets-panel').hasClass('ui-panel-closed')){
+                        $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('close');
+                    }
                 } );
             },
 

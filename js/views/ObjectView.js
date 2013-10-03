@@ -33,10 +33,14 @@ define([ "jquery",
                 this.model.on("change:id", this.changeObject, this);
 
                 this.$el.on('swipeleft', function() { 
-                    self.panelView.$el.panel('open');
+                    if($.mobile.activePage.find('#menu-panel').hasClass('ui-panel-closed')){
+                        self.panelView.$el.panel('open');
+                    }
                 } );
                 this.$el.on('swiperight', function() {
-                    self.panelView.$el.panel('close');
+                    if($.mobile.activePage.find('#menu-panel').hasClass('ui-panel-closed')){
+                        self.panelView.$el.panel('close');
+                    }
                 } );
                 
             },
