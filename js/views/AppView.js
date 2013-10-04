@@ -79,6 +79,9 @@ define([ "jquery",
                     $.mobile.changePage( WBMobile.views.searchPage.$el.selector, { reverse: false, changeHash: false } );
                 else 
                     WBMobile.views.searchPage.newSearch(className, query);
+
+                //focus the search input
+                $.mobile.activePage.find('input[name=search]').focus();
             },
 
             gotoObject: function(className, id) {
