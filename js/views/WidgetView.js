@@ -16,6 +16,10 @@ define([ "jquery",
 
             initialize: function() {
 
+                if(this.cid == "view17"){
+                    this.model.set('visible',true);
+                }
+
                 this.model.view = this;
 
                 this.model.on("change:visible", this.toggleVisibility, this);
