@@ -15,9 +15,6 @@ define([ "jquery",
         var WidgetView = Backbone.View.extend( {
 
             initialize: function() {
-                if(this.model.attributes.title == "Homology"){
-                    this.model.set('visible',true);
-                }
 
                 this.model.view = this;
 
