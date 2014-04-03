@@ -46,7 +46,11 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
             // For caching purposes
             getCacheKey: function() {
 
-                return 'ObjectMeta' + ':' + this.parent.get('className')
+                var className = this.parent.get('className');
+                if(className == "topics")
+                    className = "wbprocess";
+
+                return 'ObjectMeta' + ':' + className
             },
             
         } );
