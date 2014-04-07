@@ -13,6 +13,7 @@ Documentation can be found here:
 http://wiki.wormbase.org/index.php/Developer_documentation#The_Mobile_Website
 
 Simple server included to test run the app:
+
     cd js
     node server.js
 
