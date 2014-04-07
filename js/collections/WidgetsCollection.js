@@ -19,11 +19,14 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
 
             // Overriding parse method
             parse: function(response) {
-
                 // Extract list of default widgets
                 var defaultWidgets = ['overview'];
                 for (var widgetName in response.data.default_widgets)
                     defaultWidgets.push(widgetName);
+
+                // Override default widgets
+                if(response.data.title=="Protein")
+                    defaultWidgets.push("homology");
 
                 // we need to convert from JSON to array
                 var array = [];
@@ -43,7 +46,11 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
             // For caching purposes
             getCacheKey: function() {
 
-                return 'ObjectMeta' + ':' + this.parent.get('className')
+                var className = this.parent.get('className');
+                if(className == "topics")
+                    className = "wbprocess";
+
+                return 'ObjectMeta' + ':' + className
             },
             
         } );
