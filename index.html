@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="ui-mobile">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,44 +12,47 @@
     <link rel="stylesheet" href="./css/jquery.mobile.structure-1.3.2.css" />
     <link rel="stylesheet" href="./css/main.css" />
 
+
     <script src="./js/libs/require.js" data-main="./js/mobile"></script>
 
   </head>
-  <body>
+
+<body class="ui-mobile-viewport ui-overlay-c">
 
     <!-- START home-page -->
-    <div data-role="page" id="home-page">
-      <div data-role="panel" id="menu-panel" ></div>
-      <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" >Menu</a>
-        <h1>WormBase</h1>
-        <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext">
+    <div data-role="page" id="home-page" class="ui-page ui-body-c ui-page-header-fixed ui-page-panel ui-page-active">
+      <div data-role="panel" id="menu-panel" class="ui-panel ui-panel-position-left ui-panel-display-reveal ui-panel-closed ui-body-c ui-panel-animate"></div>
+
+      <div data-role="header" data-position="fixed" data-tap-toggle="false" class="ui-header ui-bar-a ui-header-fixed slidedown ui-panel-content-fixed-toolbar ui-panel-animate ui-panel-content-fixed-toolbar-closed">
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" class="ui-btn-left ui-btn ui-btn-up-a ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner"><span class="ui-btn-text">Menu</span><span class="ui-icon ui-icon-bars ui-icon-shadow">&nbsp;</span></span></a>
+        <h1 class="ui-title">WormBase</h1>
+        <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext" class="ui-btn-right ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-notext ui-btn-up-a"><span class="ui-btn-inner"><span class="ui-btn-text">
           Search
-        </a>
+        </span><span class="ui-icon ui-icon-search ui-icon-shadow">&nbsp;</span></span></a>
       </div>
-      <div data-role="content">
+      <div class="ui-panel-content-wrap ui-body-c ui-panel-animate ui-panel-content-wrap-closed"><div data-role="content" class="ui-content">
         <div id="home-content">
           <h1>Explore Worm Biology</h1>
-          <p>facilitating insights into <br /> nematode biology<br /></p>
-          <a href="#history" data-role="button" data-inline="true" data-theme="d">History</a>
-          <a href="#search" data-role="button" data-inline="true" data-theme="b">Search</a>
+          <p>facilitating insights into <br> nematode biology<br></p>
+          <a href="#history" data-role="button" data-inline="true" data-theme="d" class="ui-btn ui-btn-up-d ui-shadow ui-btn-corner-all ui-btn-inline"><span class="ui-btn-inner"><span class="ui-btn-text">History</span></span></a>
+          <a href="#search" data-role="button" data-inline="true" data-theme="b" class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline"><span class="ui-btn-inner"><span class="ui-btn-text">Search</span></span></a>
         </div> 
-      </div>
+      </div></div>
     </div>
     <!--END home-page -->
 
     <!-- START history-page -->
-    <div data-role="page" id="history-page">
-      <div data-role="panel" id="menu-panel" ></div>
+    <div data-role="page" id="history-page" data-url="history-page">
+      <div data-role="panel" id="menu-panel"></div>
       <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" >Menu</a>
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>WormBase</h1>
         <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext">
           Search
         </a>
       </div>
       <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter recent..." >
+        <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter recent...">
           
         </ul>
       </div>
@@ -57,13 +60,12 @@
     <!--END history-page -->
 
     <!-- START search-page -->
-    <div data-role="page" id="search-page">
-      <div data-role="panel" id="menu-panel" ></div>    
+    <div data-role="page" id="search-page" data-url="search-page">
+      <div data-role="panel" id="menu-panel"></div>    
       <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" class="ui-btn-left" data-role="button" 
-          data-icon="bars" data-mini="true" data-iconpos="notext">Menu</a>
-        <div style="margin-left:40px" >
-          <input type="search" name="search" data-mini="true" value=""/>
+        <a href="#menu-panel" class="ui-btn-left" data-role="button" data-icon="bars" data-mini="true" data-iconpos="notext">Menu</a>
+        <div style="margin-left:40px">
+          <input type="search" name="search" data-mini="true" value="">
           <div data-role="fieldcontain" style="display:inline" data-mini="true">
             <select name="search-classes" id="search-dropdown" data-theme="a">
               <!-- options here --> 
@@ -80,17 +82,17 @@
     <!-- END search-results-page -->
 
     <!-- START object-page -->
-    <div data-role="page" id="object-page">
-      <div data-role="panel" id="menu-panel" ></div>
-      <div data-role="panel" id="widgets-panel" data-position="right" >
+    <div data-role="page" id="object-page" data-url="object-page">
+      <div data-role="panel" id="menu-panel"></div>
+      <div data-role="panel" id="widgets-panel" data-position="right">
         <ul data-role="listview" id="panel-widgets-list">
           <!-- list of widgets goes here -->
         </ul>
       </div>
       <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" id="openAppMenuButton" >Menu</a>
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" id="openAppMenuButton">Menu</a>
         <h1 class="ui-title">WormBase</h1>
-        <a href="#widgets-panel" id="openWidgetsPanelButton" data-icon="grid" data-iconpos="false" >Widgets</a>
+        <a href="#widgets-panel" id="openWidgetsPanelButton" data-icon="grid" data-iconpos="false">Widgets</a>
       </div>     
       <div data-role="content">
         <ul data-role="listview" data-inset="true" data-theme="e">
@@ -105,10 +107,10 @@
     <!-- END object-page -->
 
     <!-- START browsing-page -->
-    <div data-role="page" id="browsing-page">
-      <div data-role="panel" id="menu-panel" ></div>
+    <div data-role="page" id="browsing-page" data-url="browsing-page">
+      <div data-role="panel" id="menu-panel"></div>
       <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" >Menu</a>
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>WormBase</h1>
         <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext">
           Search
@@ -122,13 +124,12 @@
     <!-- END browsing-page -->
 
     <!-- START filter-page -->
-    <div data-role="page" id="filter-page">
-      <div data-role="panel" id="menu-panel" ></div>
+    <div data-role="page" id="filter-page" data-url="filter-page">
+      <div data-role="panel" id="menu-panel"></div>
       <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" class="ui-btn-left" data-role="button" 
-          data-icon="bars" data-mini="true" data-iconpos="notext">Menu</a>
-        <div style="margin-left:40px" >
-          <input type="search" name="search" data-mini="true" value="" id="filter-search" />
+        <a href="#menu-panel" class="ui-btn-left" data-role="button" data-icon="bars" data-mini="true" data-iconpos="notext">Menu</a>
+        <div style="margin-left:40px">
+          <input type="search" name="search" data-mini="true" value="" id="filter-search">
         </div>
       </div>
       <div data-role="content">
@@ -139,10 +140,10 @@
     <!-- END filter-page -->
 
     <!-- START about-page -->
-    <div data-role="page" id="about-page">
-      <div data-role="panel" id="menu-panel" ></div>
+    <div data-role="page" id="about-page" data-url="about-page">
+      <div data-role="panel" id="menu-panel"></div>
       <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" >Menu</a>
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext">Menu</a>
         <h1>WormBase</h1>
         <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext">
           Search
@@ -150,14 +151,15 @@
       </div>
       <div data-role="content">
         <div id="home-content">
-          <h1>WormBase Mobile</h1>
-          <p><br/> other info to be written here</p>
+          <h1>About</h1>
+          <p><br>        WormBase is supported by grant #U41 HG002223 from the <br /><a href="http://www.genome.gov/">National Human Genome Research Institute</a></span> <span>at the <br /><a href="http://www.nih.gov/">US National Institutes of Health</a> and the <br /><a href="http://www.mrc.ac.uk/">British Medical Research Council</a>.
+</p>
           <a href="#home" data-role="button" data-inline="true" data-theme="d">Back to Home</a>
         </div> 
       </div>
     </div>
     <!--END about-page -->
 
-  </body>
+</body>
   
 </html>
