@@ -52,14 +52,10 @@ define([ "jquery",
 
                 // Menu panel swipe to open
                 this.$el.on('swiperight', function(event) {
-                    if($.mobile.activePage.find('#widgets-panel').hasClass('ui-panel-closed')){
-                        $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('open');
-                    }
+                    $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('open');
                 } );
                 this.$el.on('swipeleft', function() { 
-                    if($.mobile.activePage.find('#widgets-panel').hasClass('ui-panel-closed')){
-                        $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('close');
-                    }
+                    $(event.target).parents('div[data-role=page]').find('#menu-panel').panel('close');
                 } );
             },
 
@@ -79,9 +75,6 @@ define([ "jquery",
                     $.mobile.changePage( WBMobile.views.searchPage.$el.selector, { reverse: false, changeHash: false } );
                 else 
                     WBMobile.views.searchPage.newSearch(className, query);
-
-                //focus the search input
-                $.mobile.activePage.find('input[name=search]').focus();
             },
 
             gotoObject: function(className, id) {
