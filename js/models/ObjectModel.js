@@ -19,21 +19,14 @@ define([ "jquery",
 
             url: function() {
 
-                //
-                var className=this.get('className');
-                if (className=="topics")
-                    className = "wbprocess";
                 return WBMobile.defaults.BASE_URL + '/rest/widget/' 
-                      + className + '/' + this.get('id') 
+                      + this.get('className') + '/' + this.get('id') 
                       + '/overview?content-type=application/json';
             },
 
             getCacheKey: function() {
-                var className=this.get('className');
-                if (className=="topics")
-                    className = "wbprocess";           
 
-                return "Object" + ":" + className + ":" + this.get('id');
+                return "Object" + ":" + this.get('className') + ":" + this.get('id');
             },
         } );
 
