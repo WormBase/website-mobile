@@ -127,8 +127,6 @@ define([ "jquery",
             add: function(entry) {
                 // Create a result entry view for each entry that is added 
                 var entryView = new SearchResultEntryView( { model: entry } );
-                if(entryView.model.attributes.name.class == "wbprocess")
-                    entryView.model.attributes.name.class = "topics";
 
                 entryView.parent = this;
 
