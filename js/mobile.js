@@ -14,7 +14,6 @@ require.config( {
           "pluralize":      "libs/pluralize",
           "spin":           "libs/spin.min",
           "jquerySpin":     "libs/jquery.spin",
-          "fastclick":      "libs/fastclick.min"
       },
 
       // Sets the configuration for third party scripts that are not AMD compatible
@@ -39,7 +38,7 @@ require.config( {
 } );
 
 // Includes File Dependencies
-require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache", "app", "fastclick" ], function( $, Backbone, MobileRouter ) {
+require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache", "app" ], function( $, Backbone, MobileRouter ) {
 
     // Set up the "mobileinit" handler before requiring jQuery Mobile's module
     $( document ).on( "mobileinit", function() {
@@ -61,8 +60,6 @@ require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache", "app", "fa
             $.mobile.phonegapNavigationEnabled = true;
 
         $.mobile.defaultPageTransition = "slide";
-
-        FastClick.attach(document.body);
     } );
 
     require( [ "jquerymobile" ], function() {
