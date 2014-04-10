@@ -1,4 +1,4 @@
 var connect = require('connect');
 connect.createServer(
-    connect.static('/Users/acabunoc/Projects/website-mobile/')
+    connect.static('..')
 ).listen(8080);
