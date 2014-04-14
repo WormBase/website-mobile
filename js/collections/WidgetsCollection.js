@@ -25,6 +25,10 @@ define([ "jquery", "backbone", "models/WidgetModel" ],
                 for (var widgetName in response.data.default_widgets)
                     defaultWidgets.push(widgetName);
 
+               // Override default widgets
+                if(response.data.title=="Protein")
+                    defaultWidgets.push("homology");
+
                 // we need to convert from JSON to array
                 var array = [];
                 for (var widgetName in response.data.widgets) {
