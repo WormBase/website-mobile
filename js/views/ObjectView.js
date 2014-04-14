@@ -109,7 +109,11 @@ define([ "jquery",
                 if (data.taxonomy != "all")
                     boxContent += data.taxonomy + " » ";
 
-                boxContent += data.class + " » " + data.label;
+                if(data.class == "wbprocess"){
+                    boxContent += "topics" + " » " + data.label;
+                }else{
+                    boxContent += data.class + " » " + data.label;
+                }
 
                 this.$el.find('#info-box').html( boxContent );
 

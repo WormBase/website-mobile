@@ -1,6 +1,10 @@
 <li>
     <a href="#object/<%= object.get('name').class %>/<%= object.get('name').id %>">
         <h3><%= object.get('name').label %></h3>
+        <% if(object.get('name').class == "wbprocess"){ %>
+        <p><%= object.get('name').taxonomy %> - topics</p>
+        <% } else { %>
         <p><%= object.get('name').taxonomy %> - <%= object.get('name').class %></p>
+        <% } %>
     </a>
 </li>
