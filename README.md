@@ -21,12 +21,12 @@ The app will be available on localhost:4000
 
 Node and the npm module 'connect' will need to be installed for this
 
-   npm install connect
+    npm install connect
 
 To run the app in production, the npm module 'forever' will need to be installed
 
-  cd js
-  forever start production.js
+    cd js
+    forever start production.js
 
 
 
