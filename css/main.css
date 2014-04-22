@@ -44,6 +44,11 @@
     overflow: hidden;
 }
 
+.ui-collapsible-content th
+{
+    background-color: white;
+}
+
 .ui-table-columntoggle-btn
 {
     display: none;
