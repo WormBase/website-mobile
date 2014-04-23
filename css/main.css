@@ -272,10 +272,13 @@ div#google-map {
 }
 
 .toggle {
-    padding: 0.25em 0 0 0.3em;
+    padding: 0.25em 0.5em 0.5em 0.3em;
     cursor:pointer;
     margin: 0 0 0 -0.4em;
     overflow: inherit;
+    border-style:solid;
+    border-width:1px;
+    border-radius:10px;
 }
 
 #overview-content .toggle{
