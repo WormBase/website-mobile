@@ -1,6 +1,6 @@
 <%
     var $ul = $( document.createElement('ul') );
-        
+
     $ul.attr('data-role', 'listview')
        .attr('id', 'menu-panel-list')
 
@@ -11,9 +11,9 @@
         + '<li data-icon="false"><a href="#species">Browse Species</a></li>'
         + '<li data-icon="false"><a href="#resources">Browse Resources</a></li>'
         + '<li data-icon="false"><a href="#about">About</a></li>'
-        + '<li data-icon="false"><a href="'+ WBMobile.defaults.WEBSITE_URL + '/tools/support/">Report Bugs</a></li>'
-        + '<li data-icon="false"><a href="'+ WBMobile.defaults.WEBSITE_URL +'" target="_system">Go to desktop website</a></li>'
-    ); 
+        + '<li data-icon="false"><a href="'+ WBMobile.defaults.WEBSITE_URL + '/tools/support/?desktop=true">Contact Help</a></li>'
+        + '<li data-icon="false"><a href="'+ WBMobile.defaults.WEBSITE_URL +'?desktop=true" target="_system">Go to desktop website</a></li>'
+    );
 
     var route = window.location.hash.split('/')[0];
     if ( route == '' )
