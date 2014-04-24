@@ -281,6 +281,8 @@ div#google-map {
     border-radius:10px;
 }
 
+.toggle:hover{background-color: #E6E6E6;}
+
 #overview-content .toggle{
   clear:left;
 }
