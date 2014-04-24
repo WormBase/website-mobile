@@ -24,7 +24,7 @@
       <div data-role="panel" id="menu-panel" class="ui-panel ui-panel-position-left ui-panel-display-reveal ui-panel-closed ui-body-c ui-panel-animate"></div>
 
       <div data-role="header" data-position="" data-tap-toggle="false" class="ui-header ui-bar-a ui-header-fixed slidedown ui-panel-content-fixed-toolbar ui-panel-animate ui-panel-content-fixed-toolbar-closed">
-        <a onclick="$('#menu-panel').panel('open');" data-icon="bars" data-iconpos="notext" class="ui-btn-left ui-btn ui-btn-up-a ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner"><span class="ui-btn-text">Menu</span><span class="ui-icon ui-icon-bars ui-icon-shadow">&nbsp;</span></span></a>
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" class="ui-btn-left ui-btn ui-btn-up-a ui-shadow ui-btn-corner-all ui-btn-icon-notext"><span class="ui-btn-inner"><span class="ui-btn-text">Menu</span><span class="ui-icon ui-icon-bars ui-icon-shadow">&nbsp;</span></span></a>
         <h1 class="ui-title">WormBase</h1>
         <a href="#search" data-transition="slidefade" data-icon="search" data-iconpos="notext" class="ui-btn-right ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-notext ui-btn-up-a"><span class="ui-btn-inner"><span class="ui-btn-text">
           Search
@@ -91,19 +91,11 @@
         </ul>
       </div>
       <div data-role="header" data-position="" data-tap-toggle="false">
-        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" id="openAppMenuButton">Menu</a>
+        <a href="#menu-panel" data-icon="bars" data-iconpos="notext" id="openAppMenuButton" onClick="something2()">Menu</a>
         <h1 class="ui-title">WormBase</h1>
-        <a href="#widgets-panel" id="openWidgetsPanelButton" data-icon="grid" data-iconpos="false">Widgets</a>
+        <a href="#widgets-panel" id="openWidgetsPanelButton" data-icon="grid" data-iconpos="false" onClick="something()">Widgets</a>
       </div>     
       <div data-role="content">
-        <!--
-        <a href="#widgets-panel" id="openWidgetsPanelButton" data-icon="grid" data-iconpos="false" class="ui-btn-right ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-a" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="a">
-            <span class="ui-btn-inner">
-                <span class="ui-btn-text">Add more widgets</span>
-                <span class="ui-icon ui-icon-grid ui-icon-shadow">&nbsp;</span>
-            </span>
-        </a>
-        -->
         <ul data-role="listview" data-inset="true" data-theme="e">
           <li id="info-box"></li>
         </ul>
