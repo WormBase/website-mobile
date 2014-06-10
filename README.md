@@ -12,25 +12,17 @@ https://build.phonegap.com/apps/544268
 http://wiki.wormbase.org/index.php/Developer_documentation#The_Mobile_Website
 
 ## Installation instructions for Amazon Linux
-### Install Node:
- > git clone git://github.com/joyent/node.git
- > cd node
- > git checkout << branch >>
- > ./configure
- > make
- > sudo make install
-
-### Install npm
- > sudo su
- > PATH=$PATH:/usr/local/wormbase/website/3rdparty/node:/usr/local/wormbase/website/3rdparty/bin
- > export PATH
- > cd /usr/local/wormbase/website/3rdparty ; mkdir npm ; cd npm
- > curl http://npmjs.org/install.sh | sh
- > exit
+### Install Node and npm binaries
+ > wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-x64.tar.gz
+ > tar xzf node*
+ > cd /usr/local
+ > sudo mv ~/node* /usr/local/.
+ > sudo ln -s node* node
+ // add /usr/local/node/bin to your path 
 
 ### Install connect and forever npm modules
- > sudo ./bin/npm install connect
- > sudo ./bin/npm install forever
+ > sudo npm install connect
+ > sudo npm install forever
 
 ## Testing the app
 
