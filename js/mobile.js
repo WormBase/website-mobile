@@ -63,6 +63,9 @@ require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache", "app", "fa
         $.mobile.defaultPageTransition = "slide";
 
         FastClick.attach(document.body);
+
+        // avoid fastclick interfering with panel closing
+        $("div[data-role='panel']").attr('data-classes', '{"modal":"needsclick ui-panel-dismiss"}');
     } );
 
     require( [ "jquerymobile" ], function() {
