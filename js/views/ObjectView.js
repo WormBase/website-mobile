@@ -31,17 +31,6 @@ define([ "jquery",
                 this.model.widgets.on("reset", this.reset, this);
 
                 this.model.on("change:id", this.changeObject, this);
-
-                this.$el.on('swipeleft', function() { 
-                    if($.mobile.activePage.find('#menu-panel').hasClass('ui-panel-closed')){
-                        self.panelView.$el.panel('open');
-                    }
-                } );
-                this.$el.on('swiperight', function() {
-                    if($.mobile.activePage.find('#menu-panel').hasClass('ui-panel-closed')){
-                        self.panelView.$el.panel('close');
-                    }
-                } );
                 
             },
 
