@@ -1,4 +1,2 @@
-var connect = require('connect');
-connect.createServer(
-    connect.static('..')
-).listen(10000);
+var start_server = require('./start_server.js');
+start_server(10000);

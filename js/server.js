@@ -1,7 +1,2 @@
-var connect = require('connect'),
-    serveStatic = require('serve-static');
-
-var app = connect();
-
-app.use(serveStatic(".."));
-app.listen(process.argv[2] || 4000);
+var start_server = require('./start_server.js');
+start_server(process.argv[2] || 4000);
