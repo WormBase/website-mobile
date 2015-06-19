@@ -15,13 +15,14 @@ http://wiki.wormbase.org/index.php/Developer_documentation#The_Mobile_Website
 Simple server included to test run the app:
 
     cd js
-    node server.js
+    node server.js [optional_port_number]
 
-The app will be available on localhost:4000
+The app will be available on localhost:4000 or the port you specified
 
 Node and the npm module 'connect' will need to be installed for this
 
     npm install connect
+    npm install serve-static
 
 To run the app in production, the npm module 'forever' will need to be installed
 

@@ -120,12 +120,12 @@ define([ "jquery",
                                         $('#object-page div[data-role=header] h1')[0].innerHTML = self.model.get('fields').name.data.label;
                                     
                                     widgetContent = _.template(widgetTemplate, { "fields": self.model.get('fields') } );
-                                    widgetBox.append(widgetContent).trigger('create');
+                                    widgetBox.spin(false).append(widgetContent).trigger('create');
                                 },
 
                                 error: function() {
                                     widgetContent = "<p>Error while retrieving widget from the server</p>";
-                                    widgetBox.append(widgetContent);
+                                    widgetBox.spin(false).append(widgetContent);
                                 },
                             } );
 
