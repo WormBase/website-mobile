@@ -1,0 +1,22 @@
+{
+  "name": "website-mobile",
+  "version": "0.0.0",
+  "description": "mobile web client for WormBase website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/WormBase/website-mobile.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/WormBase/website-mobile/issues"
+  },
+  "dependencies": {
+    "serve-static": "~1.10.0",
+    "connect": "~3.4.0"
+  }
+}
