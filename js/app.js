@@ -1,6 +1,6 @@
 
 define( ['backbone', 'utils'], function( Backbone, utils ) {
-           
+
     $(function(){
 
         window.WBMobile = window.WBMobile || {
@@ -17,12 +17,12 @@ define( ['backbone', 'utils'], function( Backbone, utils ) {
             utils: utils,
 
             defaults: {
-                BASE_URL:       "http://staging.wormbase.org",
+                BASE_URL:       "http://www.wormbase.org",
 
                 WEBSITE_URL:    "http://www.wormbase.org",
 
                 SPINNER_OPTS: {
-                
+
                     lines: 13, // The number of lines to draw
                     length: 20, // The length of each line
                     width: 10, // The line thickness
