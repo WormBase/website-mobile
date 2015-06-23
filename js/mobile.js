@@ -32,7 +32,7 @@ require.config( {
             "pluralize": {
                 "exports": "owl"
             },
-      }, 
+      },
 
       // For development purposes , this prevents require.js from caching scripts
       urlArgs: "timestamp=" + (new Date()).getTime()
@@ -60,7 +60,7 @@ require([ "jquery", "backbone", "routers/mobileRouter", "fetchcache", "app", "fa
             // Solves phonegap issues with the back-button
             $.mobile.phonegapNavigationEnabled = true;
 
-        $.mobile.defaultPageTransition = "slide";
+       // $.mobile.defaultPageTransition = "slide";
 
         FastClick.attach(document.body);
 
